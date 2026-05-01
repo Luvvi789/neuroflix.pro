@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>¡Bienvenido a NeuroFlix!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tus accesos a NeuroFlix están listos">
+  <meta name="theme-color" content="#080808">
+  <link rel="apple-touch-icon" href="files/logo1.png">
+  <link rel="icon" href="files/logo1.png">
+
+  <style>
+    @font-face {
+      font-family: LaObrige;
+      src: url(files/LaObrige.otf);
+    }
+
+    @font-face {
+      src: url(home/fonts/InterV/medium.html), url(home/fonts/InterV/medium-2.html);
+      font-display: swap;
+      font-family: Inter V;
+      font-weight: 500;
+    }
+
+    @font-face {
+      src: url(home/fonts/InterV/regular.html), url(home/fonts/InterV/regular-2.html);
+      font-display: swap;
+      font-family: Inter V;
+      font-weight: 400;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    html, body {
+      overflow-x: hidden;
+    }
+
+    body {
+      background-color: #030014;
+      color: #fff;
+      font-family: Inter V, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Background glow effect */
+    body::before {
+      content: "";
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1440px;
+      height: 900px;
+      background: radial-gradient(37.74% 81.78% at 50% 26.56%, rgba(148, 101, 255, .12) 0%, rgba(3, 0, 20, 0) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header / Logo */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 48px;
+      gap: 12px;
+    }
+
+    .header img {
+      width: 52px;
+      height: 52px;
+    }
+
+    .header-name {
+      font-family: LaObrige;
+      font-size: 24px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Success badge */
+    .badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: max-content;
+      margin: 0 auto 16px;
+      padding: 6px 14px;
+      border-radius: 32px;
+      background: rgba(255, 255, 255, .02);
+      backdrop-filter: blur(6px);
+      box-shadow: inset 0 -7px 11px rgba(164, 143, 255, .12);
+      position: relative;
+      overflow: hidden;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .badge::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      padding: 1px;
+      border-radius: inherit;
+      background: linear-gradient(90.01deg, rgba(229, 156, 255, .24) .01%, rgba(186, 156, 255, .24) 50.01%, rgba(156, 178, 255, .24) 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .badge-text {
+      background: linear-gradient(0deg, rgba(255, 255, 255, .4), rgba(255, 255, 255, .4)), linear-gradient(90.01deg, #e59cff .01%, #ba9cff 50.01%, #9cb2ff 100%);
+      background-blend-mode: normal, screen;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .check-icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    /* Hero title */
+    .hero-title {
+      font-family: LaObrige;
+      font-weight: 500;
+      font-size: 56px;
+      line-height: 64px;
+      text-align: center;
+      margin-bottom: 16px;
+      background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, .7) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      text-align: center;
+      color: #efedfdb3;
+      font-size: 18px;
+      line-height: 28px;
+      max-width: 600px;
+      margin: 0 auto 56px;
+    }
+
+    /* Loading state */
+    .loading-state {
+      text-align: center;
+      padding: 60px 0;
+    }
+
+    .loading-spinner {
+      width: 56px;
+      height: 56px;
+      border: 3px solid rgba(186, 156, 255, .12);
+      border-top-color: #ba9cff;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      color: #efedfd99;
+      font-size: 16px;
+    }
+
+    /* Error state */
+    .error-state {
+      text-align: center;
+      padding: 60px 0;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .error-state h3 {
+      font-family: LaObrige;
+      font-size: 28px;
+      margin-bottom: 12px;
+      color: #ff9c9c;
+    }
+
+    .error-state p {
+      color: #efedfdb3;
+      margin-bottom: 24px;
+      line-height: 24px;
+    }
+
+    /* Credentials section */
+    .credentials {
+      display: none;
+    }
+
+    .credentials-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    @media (max-width: 720px) {
+      .credentials-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .credential-card {
+      background: radial-gradient(71.86% 50% at 50% 0%, rgba(168, 127, 255, .04) 0%, rgba(168, 127, 255, 0) 100%), rgba(255, 255, 255, .01);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 16px;
+      padding: 24px;
+      position: relative;
+      transition: border-color .3s ease, background .3s ease;
+    }
+
+    .credential-card:hover {
+      border-color: rgba(186, 156, 255, .3);
+      background: radial-gradient(71.86% 50% at 50% 0%, rgba(168, 127, 255, .08) 0%, rgba(168, 127, 255, 0) 100%), rgba(255, 255, 255, .02);
+    }
+
+    .credential-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #efedfd99;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      font-weight: 500;
+    }
+
+    .credential-label svg {
+      width: 14px;
+      height: 14px;
+      opacity: 0.7;
+    }
+
+    .credential-value-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .credential-value {
+      font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+      font-size: 22px;
+      color: #fff;
+      letter-spacing: 0.5px;
+      word-break: break-all;
+    }
+
+    .copy-btn {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(255, 255, 255, .08);
+      color: #efedfdb3;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s cubic-bezier(.6, .6, 0, 1);
+    }
+
+    .copy-btn:hover {
+      background: rgba(186, 156, 255, .15);
+      border-color: rgba(186, 156, 255, .3);
+      color: #fff;
+    }
+
+    .copy-btn.copied {
+      background: rgba(121, 255, 191, .15);
+      border-color: rgba(121, 255, 191, .3);
+      color: #79ffbf;
+    }
+
+    .copy-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Steps */
+    .steps-section {
+      background: rgba(255, 255, 255, .01);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 32px;
+    }
+
+    .steps-title {
+      font-family: LaObrige;
+      font-size: 24px;
+      margin-bottom: 24px;
+      background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, .7) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .step {
+      display: flex;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, .06);
+    }
+
+    .step:last-child {
+      border-bottom: none;
+    }
+
+    .step-number {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, rgba(207, 184, 255, .24) 0%, rgba(207, 184, 255, .08) 100%);
+      border: 1px solid rgba(207, 184, 255, .32);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+      color: #cfb8ff;
+    }
+
+    .step-content {
+      flex: 1;
+    }
+
+    .step-title {
+      font-weight: 500;
+      font-size: 16px;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .step-desc {
+      color: #efedfd99;
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    /* Buttons */
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 56px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all .2s cubic-bezier(.6, .6, 0, 1);
+      position: relative;
+      backdrop-filter: blur(8px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(180deg, rgba(60, 8, 126, 0) 0%, rgba(60, 8, 126, .32) 100%), rgba(113, 47, 255, .24);
+      box-shadow: inset 0 0 12px rgba(191, 151, 255, .4);
+      color: #f4f0ff;
+    }
+
+    .btn-primary::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      padding: 1px;
+      border-radius: inherit;
+      background: linear-gradient(180deg, rgba(207, 184, 255, .32) 0%, rgba(207, 184, 255, .08) 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(180deg, rgba(60, 8, 126, 0) 0%, rgba(60, 8, 126, .42) 100%), rgba(113, 47, 255, .35);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, .03);
+      border: 1px solid rgba(255, 255, 255, .12);
+      color: #f4f0ff;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, .06);
+      border-color: rgba(255, 255, 255, .2);
+      transform: translateY(-1px);
+    }
+
+    .btn-whatsapp {
+      background: rgba(37, 211, 102, .12);
+      border: 1px solid rgba(37, 211, 102, .3);
+      color: #4ade80;
+    }
+
+    .btn-whatsapp:hover {
+      background: rgba(37, 211, 102, .2);
+      border-color: rgba(37, 211, 102, .5);
+      transform: translateY(-1px);
+    }
+
+    /* Video section */
+    .video-section {
+      margin-bottom: 48px;
+    }
+
+    .video-title {
+      font-family: LaObrige;
+      font-size: 28px;
+      text-align: center;
+      margin-bottom: 8px;
+      background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, .7) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .video-subtitle {
+      text-align: center;
+      color: #efedfd99;
+      margin-bottom: 24px;
+      font-size: 15px;
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: rgba(255, 255, 255, .02);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, .12);
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    .video-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      color: #efedfd66;
+      font-size: 13px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, .06);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(121, 255, 191, .15);
+      border: 1px solid rgba(121, 255, 191, .3);
+      backdrop-filter: blur(12px);
+      color: #79ffbf;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      opacity: 0;
+      transition: all .3s cubic-bezier(.6, .6, 0, 1);
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Mobile */
+    @media (max-width: 720px) {
+      .hero-title {
+        font-size: 40px;
+        line-height: 48px;
+      }
+
+      .hero-subtitle {
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+      .credential-value {
+        font-size: 18px;
+      }
+
+      .container {
+        padding: 40px 16px 60px;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    /* Fade-in animation */
+    .fade-in {
+      animation: fadeIn .6s cubic-bezier(.6, .6, 0, 1) forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header">
+      <img src="files/logo1.png" alt="NeuroFlix">
+      <span class="header-name">NeuroFlix</span>
+    </div>
+
+    <!-- Badge -->
+    <div class="badge">
+      <svg class="check-icon" viewBox="0 0 24 24" fill="none">
+        <path d="M5 12L10 17L20 7" stroke="url(#checkGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <defs>
+          <linearGradient id="checkGrad" x1="0" y1="0" x2="24" y2="24">
+            <stop stop-color="#e59cff"/>
+            <stop offset="0.5" stop-color="#ba9cff"/>
+            <stop offset="1" stop-color="#9cb2ff"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <span class="badge-text">Pago confirmado</span>
+    </div>
+
+    <!-- Hero -->
+    <h1 class="hero-title">¡Bienvenido a NeuroFlix!</h1>
+    <p class="hero-subtitle">Tu acceso está listo. Guarda estos datos en un lugar seguro — los necesitarás para entrar a la plataforma.</p>
+
+    <!-- Loading state -->
+    <div id="loading" class="loading-state">
+      <div class="loading-spinner"></div>
+      <p class="loading-text">Generando tus accesos…</p>
+    </div>
+
+    <!-- Error state -->
+    <div id="error" class="error-state" style="display: none;">
+      <h3>Aún preparando tus datos</h3>
+      <p>Esto suele tomar unos segundos. Si no aparecen, revisa tu WhatsApp — también te llegan ahí.</p>
+      <button class="btn btn-secondary" onclick="loadAccess()">Reintentar</button>
+    </div>
+
+    <!-- Credentials -->
+    <div id="credentials" class="credentials fade-in">
+
+      <!-- Credentials grid -->
+      <div class="credentials-grid">
+        <div class="credential-card">
+          <div class="credential-label">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
+            </svg>
+            Usuario
+          </div>
+          <div class="credential-value-wrap">
+            <span class="credential-value" id="usuario">—</span>
+            <button class="copy-btn" onclick="copyToClipboard('usuario', this)" title="Copiar">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="2"/>
+                <path d="M16 8V6C16 4.89 15.11 4 14 4H6C4.89 4 4 4.89 4 6V14C4 15.11 4.89 16 6 16H8" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="credential-card">
+          <div class="credential-label">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M18 8H17V6C17 3.24 14.76 1 12 1C9.24 1 7 3.24 7 6V8H6C4.89 8 4 8.89 4 10V20C4 21.11 4.89 22 6 22H18C19.11 22 20 21.11 20 20V10C20 8.89 19.11 8 18 8ZM12 17C10.9 17 10 16.1 10 15C10 13.9 10.9 13 12 13C13.1 13 14 13.9 14 15C14 16.1 13.1 17 12 17ZM15.1 8H8.9V6C8.9 4.29 10.29 2.9 12 2.9C13.71 2.9 15.1 4.29 15.1 6V8Z" fill="currentColor"/>
+            </svg>
+            Contraseña
+          </div>
+          <div class="credential-value-wrap">
+            <span class="credential-value" id="password">—</span>
+            <button class="copy-btn" onclick="copyToClipboard('password', this)" title="Copiar">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="2"/>
+                <path d="M16 8V6C16 4.89 15.11 4 14 4H6C4.89 4 4 4.89 4 6V14C4 15.11 4.89 16 6 16H8" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Steps -->
+      <div class="steps-section">
+        <h3 class="steps-title">¿Cómo empezar?</h3>
+
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <div class="step-title">Descarga DICloak</div>
+            <div class="step-desc">Es la aplicación donde vas a iniciar sesión con tu usuario y contraseña. Disponible para Windows y Mac.</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <div class="step-title">Inicia sesión</div>
+            <div class="step-desc">Abre DICloak e ingresa con los datos de arriba. Tendrás acceso a más de 35 herramientas IA premium.</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <div class="step-title">Únete a la comunidad</div>
+            <div class="step-desc">Conecta con otros emprendedores, recibe actualizaciones y soporte directo en nuestro grupo de WhatsApp.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="actions">
+        <a href="https://dicloak.com/download" target="_blank" class="btn btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3V15M12 15L7 10M12 15L17 10M5 21H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Descargar DICloak
+        </a>
+
+        <a href="https://chat.whatsapp.com/FljHoUCZtEr1U1NfCj4NzG" target="_blank" class="btn btn-whatsapp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          Unirme a la comunidad
+        </a>
+      </div>
+
+      <!-- Video tutorial -->
+      <div class="video-section">
+        <h2 class="video-title">Mira el tutorial</h2>
+        <p class="video-subtitle">En menos de 5 minutos aprenderás cómo usar todas las herramientas</p>
+
+        <div class="video-wrapper">
+          <iframe
+            src="https://player-vz-6a82c3ac-f84.tv.pandavideo.com.br/embed/?v=6741f454-a866-4678-b1a1-195e4cee90ef"
+            allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      ¿Necesitas ayuda? Escríbenos a <a href="mailto:soporte@neuroflix.pro" style="color: #ba9cff; text-decoration: none;">soporte@neuroflix.pro</a>
+    </div>
+
+  </div>
+
+  <!-- Toast notification -->
+  <div id="toast" class="toast">¡Copiado al portapapeles!</div>
+
+  <script>
+    const API_URL = 'https://n8n-n8n.r4ojxc.easypanel.host/webhook/access';
+
+    // Get session_id from URL
+    function getSessionId() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('session_id');
+    }
+
+    // Load access data from API
+    async function loadAccess() {
+      const sessionId = getSessionId();
+
+      const loading = document.getElementById('loading');
+      const error = document.getElementById('error');
+      const credentials = document.getElementById('credentials');
+
+      loading.style.display = 'block';
+      error.style.display = 'none';
+      credentials.style.display = 'none';
+
+      if (!sessionId) {
+        loading.style.display = 'none';
+        error.style.display = 'block';
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_URL}?session_id=${encodeURIComponent(sessionId)}`);
+
+        if (!response.ok) throw new Error('No data');
+
+        const data = await response.json();
+
+        if (!data || !data.dicloak_usuario) {
+          // Data still being processed, retry after 3s
+          setTimeout(loadAccess, 3000);
+          return;
+        }
+
+        // Display credentials
+        document.getElementById('usuario').textContent = data.dicloak_usuario;
+        document.getElementById('password').textContent = data.dicloak_password;
+
+        loading.style.display = 'none';
+        credentials.style.display = 'block';
+
+      } catch (err) {
+        console.error('Error loading access:', err);
+        // Retry after 3s
+        setTimeout(loadAccess, 3000);
+      }
+    }
+
+    // Copy to clipboard
+    function copyToClipboard(elementId, button) {
+      const text = document.getElementById(elementId).textContent;
+
+      navigator.clipboard.writeText(text).then(() => {
+        // Update button
+        const originalHTML = button.innerHTML;
+        button.classList.add('copied');
+        button.innerHTML = '<svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M5 12L10 17L20 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+        // Show toast
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+
+        setTimeout(() => {
+          button.classList.remove('copied');
+          button.innerHTML = originalHTML;
+          toast.classList.remove('show');
+        }, 2000);
+      });
+    }
+
+    // Start loading on page load
+    loadAccess();
+  </script>
+</body>
+</html>
