@@ -4,9 +4,9 @@ let connect = document.getElementById('connected');
 let blur1 = document.getElementById('blur-1');
 let blur2 = document.getElementById('blur-2');
 let blur3 = document.getElementById('blur');
-let conexao = document.getElementById('conexao');
-let conexao2 = document.getElementById('conexao-1');
-let conexao3 = document.getElementById('conexao-2');
+let conexao = document.getElementById('conexion');
+let conexao2 = document.getElementById('conexion-1');
+let conexao3 = document.getElementById('conexion-2');
 
 // Si falta alguno de los elementos de la animación, se desactiva sin romper el resto de la página.
 const animacionLista = [connect, blur1, blur2, blur3, conexao, conexao2, conexao3].every(Boolean);
