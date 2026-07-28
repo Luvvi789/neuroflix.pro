@@ -8,7 +8,17 @@ let conexao = document.getElementById('conexao');
 let conexao2 = document.getElementById('conexao-1');
 let conexao3 = document.getElementById('conexao-2');
 
+// Si falta alguno de los elementos de la animación, se desactiva sin romper el resto de la página.
+const animacionLista = [connect, blur1, blur2, blur3, conexao, conexao2, conexao3].every(Boolean);
+
+// Año del footer
+const anioFooter = document.getElementById('footer-year');
+if (anioFooter) {
+    anioFooter.textContent = new Date().getFullYear();
+}
+
 window.onload = () => {
+    if (!animacionLista) return;
     conexao2.classList.remove('connected-card-backlink-circles');
     conexao3.classList.remove('connected-card-backlink-lines');
     conexao.classList.remove('connected-card-backlink-animation');
@@ -38,6 +48,7 @@ window.onscroll = () => {
 }
 
 
+if (animacionLista) {
 connect.onmouseover = function (event) {
     if (this != event.currentTarget) { return false; }
     conexao.hidden = false;
@@ -74,12 +85,11 @@ function handleIntersection(entries, observer) {
     });
 }
 
-const observer = new IntersectionObserver(handleIntersection, { threshold: 0.5 });
 const targetElement = document.getElementById('view');
-observer.observe(targetElement);
-
-
-
+if (targetElement) {
+    const observer = new IntersectionObserver(handleIntersection, { threshold: 0.5 });
+    observer.observe(targetElement);
+}
 
 connect.onmouseout = function (event) {
     if (this != event.currentTarget) { return false; }
@@ -94,3 +104,4 @@ connect.onmouseout = function (event) {
     blur1.classList.remove('connected-card-record-circle-blur');
     blur2.classList.remove('connected-card-record-circle');
 }
+} // fin de if (animacionLista)
