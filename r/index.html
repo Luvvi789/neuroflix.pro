@@ -29,30 +29,47 @@ a{color:#ba9cff}
 <div>
   <img src="../files/logo1.png" alt="NeuroFlix">
   <h1>Un momento</h1>
-  <p>Te estamos llevando a tu prueba gratis</p>
+  <p id="txt">Te estamos llevando a NeuroFlix</p>
   <p style="margin-top:18px"><span class="dot"></span><span class="dot"></span><span class="dot"></span></p>
   <p style="margin-top:22px;font-size:13px">Si no avanza solo, <a id="manual" href="/prueba">entra aqui</a>.</p>
 </div>
 
 <script>
 (function () {
+  var PLANES = {
+    mensual:    'https://buy.stripe.com/fZu8wOdIidND5P3bmMabK00',
+    trimestral: 'https://buy.stripe.com/9B628qbAacJz3GVbmMabK03',
+    semestral:  'https://buy.stripe.com/eVq6oG1ZA8tjcdr3UkabK02',
+    anual:      'https://buy.stripe.com/6oU6oG33EbFvcdreyYabK01'
+  };
+
   var params = new URLSearchParams(location.search);
   var code = params.get('a') || params.get('r') || params.get('afiliado') || '';
+  var destino = (params.get('d') || params.get('destino') || '').toLowerCase();
 
-  if (!code) {
-    // formato /r/CODIGO
-    var parts = location.pathname.split('/').filter(Boolean);
-    var i = parts.indexOf('r');
-    if (i !== -1 && parts[i + 1]) code = parts[i + 1];
+  // formato /r/CODIGO  o  /r/CODIGO/mensual
+  var parts = location.pathname.split('/').filter(Boolean);
+  var i = parts.indexOf('r');
+  if (i !== -1) {
+    if (!code && parts[i + 1]) code = parts[i + 1];
+    if (!destino && parts[i + 2]) destino = parts[i + 2].toLowerCase();
   }
 
   code = String(code).toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 20);
 
   try { if (code) localStorage.setItem('nf_afi', code); } catch (e) {}
 
-  var destino = '/prueba' + (code ? '?a=' + code : '');
-  document.getElementById('manual').setAttribute('href', destino);
-  location.replace(destino);
+  var url;
+  if (PLANES[destino]) {
+    url = PLANES[destino] + (code ? '?client_reference_id=' + code : '');
+    document.getElementById('txt').textContent = 'Te estamos llevando al pago seguro';
+  } else {
+    url = '/prueba' + (code ? '?a=' + code : '');
+    document.getElementById('txt').textContent = 'Te estamos llevando a tu prueba gratis';
+  }
+
+  document.getElementById('manual').setAttribute('href', url);
+  location.replace(url);
 })();
 </script>
 </body>
