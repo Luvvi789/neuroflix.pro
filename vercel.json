@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/r/:codigo", "destination": "/r/index.html" },
+    { "source": "/r/:codigo/:plan", "destination": "/r/index.html" }
+  ]
+}
