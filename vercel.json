@@ -1,15 +1,11 @@
 {
+  "redirects": [
+    { "source": "/", "has": [{ "type": "host", "value": "panel.neuroflix.pro" }], "destination": "/entrar", "permanent": false }
+  ],
   "rewrites": [
-    {
-      "source": "/:codigo/:clave",
-      "has": [{ "type": "host", "value": "panel.neuroflix.pro" }],
-      "destination": "https://n8n-n8n.r4ojxc.easypanel.host/webhook/mi-panel?c=:codigo&k=:clave"
-    },
-    {
-      "source": "/(.*)",
-      "has": [{ "type": "host", "value": "panel.neuroflix.pro" }],
-      "destination": "https://n8n-n8n.r4ojxc.easypanel.host/webhook/mi-panel"
-    },
+    { "source": "/entrar", "has": [{ "type": "host", "value": "panel.neuroflix.pro" }], "destination": "https://n8n-n8n.r4ojxc.easypanel.host/webhook/mi-panel" },
+    { "source": "/:codigo/:clave", "has": [{ "type": "host", "value": "panel.neuroflix.pro" }], "destination": "https://n8n-n8n.r4ojxc.easypanel.host/webhook/mi-panel?c=:codigo&k=:clave" },
+    { "source": "/(.*)", "has": [{ "type": "host", "value": "panel.neuroflix.pro" }], "destination": "https://n8n-n8n.r4ojxc.easypanel.host/webhook/mi-panel" },
     { "source": "/r/:codigo", "destination": "/r/index.html" },
     { "source": "/r/:codigo/:plan", "destination": "/r/index.html" },
     { "source": "/registro", "destination": "https://n8n-n8n.r4ojxc.easypanel.host/webhook/afiliados" },
