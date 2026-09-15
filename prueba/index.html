@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prueba NeuroFlix gratis 30 minutos</title>
+<meta name="description" content="Prueba gratis 30 minutos NeuroFlix: mas de 35 herramientas de IA premium en una sola cuenta. Sin tarjeta.">
+<link rel="icon" href="../files/logo1.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@font-face { font-family: LaObrige; src: url(../files/LaObrige.otf); }
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+html,body{overflow-x:hidden}
+body{
+  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  background:#030014;color:#f4f0ff;line-height:1.6;
+  background-image:
+    radial-gradient(60% 40% at 15% -5%, rgba(186,156,255,.20), transparent 60%),
+    radial-gradient(50% 35% at 90% 0%, rgba(229,156,255,.14), transparent 60%);
+  background-repeat:no-repeat;
+}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+header{padding:22px 0;display:flex;align-items:center;justify-content:space-between;gap:16px}
+header img{height:34px;width:auto}
+.pill{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#cfb8ff;border:1px solid rgba(207,184,255,.28);border-radius:999px;padding:7px 14px;white-space:nowrap}
+
+.hero{display:grid;grid-template-columns:1fr;gap:34px;padding:26px 0 10px}
+@media(min-width:900px){.hero{grid-template-columns:1.05fr .95fr;gap:52px;padding:44px 0 20px;align-items:start}}
+
+h1{font-family:LaObrige,'Inter',sans-serif;font-size:40px;line-height:1.08;letter-spacing:-.01em;margin-bottom:16px}
+h1 em{font-style:normal;background:linear-gradient(92deg,#e59cff,#ba9cff 45%,#9cb2ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+@media(min-width:900px){h1{font-size:54px}}
+.lead{font-size:17px;color:#bfb6d8;max-width:34em}
+.lead b{color:#f4f0ff;font-weight:600}
+
+.checks{list-style:none;margin:24px 0 0;display:grid;gap:11px}
+.checks li{display:flex;gap:11px;align-items:flex-start;font-size:15px;color:#cfc6e2}
+.checks svg{flex:none;margin-top:3px}
+
+.card{
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(207,184,255,.16);
+  border-radius:20px;padding:26px 22px;
+  box-shadow:0 24px 70px -30px rgba(186,156,255,.5);
+  backdrop-filter:blur(6px);
+}
+.card h2{font-size:20px;margin-bottom:6px;letter-spacing:-.01em}
+.card .note{font-size:13.5px;color:#9d94b8;margin-bottom:20px}
+
+label{display:block;font-size:12.5px;text-transform:uppercase;letter-spacing:.07em;color:#9d94b8;margin:16px 0 7px}
+input{
+  width:100%;padding:14px 15px;border-radius:12px;font-size:15.5px;font-family:inherit;
+  border:1px solid rgba(207,184,255,.2);background:rgba(3,0,20,.6);color:#fff;transition:border-color .15s,box-shadow .15s;
+}
+input::placeholder{color:#6d6486}
+input:focus{outline:none;border-color:#ba9cff;box-shadow:0 0 0 3px rgba(186,156,255,.16)}
+button{
+  width:100%;margin-top:24px;padding:16px;border:none;border-radius:12px;cursor:pointer;
+  font-family:inherit;font-size:16px;font-weight:700;color:#12002b;
+  background:linear-gradient(92deg,#e59cff,#ba9cff 55%,#9cb2ff);
+  transition:transform .12s,filter .15s;
+}
+button:hover{filter:brightness(1.07)}
+button:active{transform:translateY(1px)}
+.fineprint{font-size:12.5px;color:#7d7496;margin-top:14px;text-align:center}
+
+section{padding:56px 0}
+h2.sec{font-family:LaObrige,'Inter',sans-serif;font-size:30px;letter-spacing:-.01em;margin-bottom:10px}
+.sec-sub{color:#9d94b8;font-size:15.5px;margin-bottom:26px;max-width:46em}
+
+.video{
+  position:relative;width:100%;aspect-ratio:16/9;border-radius:18px;overflow:hidden;
+  border:1px solid rgba(207,184,255,.18);background:#0b0420;
+  box-shadow:0 30px 80px -40px rgba(186,156,255,.55);
+}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+.steps{list-style:none;counter-reset:s;display:grid;gap:14px;margin-top:26px}
+@media(min-width:760px){.steps{grid-template-columns:repeat(3,1fr)}}
+.steps li{
+  counter-increment:s;background:rgba(255,255,255,.03);border:1px solid rgba(207,184,255,.13);
+  border-radius:16px;padding:20px 18px;
+}
+.steps li::before{
+  content:counter(s);display:flex;align-items:center;justify-content:center;
+  width:30px;height:30px;border-radius:9px;margin-bottom:12px;font-weight:700;font-size:14px;color:#12002b;
+  background:linear-gradient(92deg,#e59cff,#9cb2ff);
+}
+.steps b{display:block;margin-bottom:4px;font-size:15.5px}
+.steps span{font-size:14px;color:#a79ec2}
+
+.faq{display:grid;gap:12px;margin-top:8px}
+details{background:rgba(255,255,255,.03);border:1px solid rgba(207,184,255,.13);border-radius:14px;padding:16px 18px}
+details[open]{border-color:rgba(186,156,255,.3)}
+summary{cursor:pointer;font-weight:600;font-size:15.5px;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'+';float:right;color:#ba9cff;font-size:19px;line-height:1}
+details[open] summary::after{content:'\2013'}
+details p{margin-top:10px;color:#a79ec2;font-size:14.5px}
+
+footer{border-top:1px solid rgba(207,184,255,.12);padding:30px 0 46px;color:#6d6486;font-size:13px;text-align:center}
+footer a{color:#a79ec2;text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <img src="../files/logo1.png" alt="NeuroFlix">
+    <span class="pill">30 minutos gratis &middot; sin tarjeta</span>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1>Prueba <em>NeuroFlix</em> gratis por 30 minutos</h1>
+      <p class="lead">Mas de <b>35 herramientas de IA premium</b> en una sola cuenta: escritura, imagen, video, voz y automatizacion. Sin instalar nada raro y sin poner tu tarjeta.</p>
+      <ul class="checks">
+        <li><svg width="17" height="17" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#79ffbf" stroke-width="1.5"/><path d="M6 10.4l2.6 2.6L14 7.6" stroke="#79ffbf" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Acceso inmediato: tus datos aparecen en pantalla al enviar el formulario.</span></li>
+        <li><svg width="17" height="17" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#79ffbf" stroke-width="1.5"/><path d="M6 10.4l2.6 2.6L14 7.6" stroke="#79ffbf" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Las mismas herramientas que usan los clientes de pago, sin recortes.</span></li>
+        <li><svg width="17" height="17" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#79ffbf" stroke-width="1.5"/><path d="M6 10.4l2.6 2.6L14 7.6" stroke="#79ffbf" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>No pedimos tarjeta y no se cobra nada al terminar.</span></li>
+      </ul>
+    </div>
+
+    <div class="card" id="empezar">
+      <h2>Activa tu prueba</h2>
+      <p class="note">Llena estos tres datos y tu acceso queda listo en el momento.</p>
+      <form method="POST" action="https://n8n-n8n.r4ojxc.easypanel.host/webhook/prueba-gratis">
+        <label for="n">Tu nombre</label>
+        <input id="n" name="nombre" required autocomplete="name" placeholder="Nombre y apellido">
+        <label for="e">Tu email</label>
+        <input id="e" name="email" type="email" required autocomplete="email" placeholder="tucorreo@gmail.com">
+        <label for="t">Tu WhatsApp</label>
+        <input id="t" name="telefono" required autocomplete="tel" placeholder="+52 55 1234 5678">
+        <input type="hidden" name="afiliado" id="afi">
+        <button type="submit">Empezar mi prueba de 30 min</button>
+      </form>
+      <p class="fineprint">Una prueba por persona. Te enviamos los accesos tambien por correo.</p>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="sec">Mira como entrar en 3 minutos</h2>
+    <p class="sec-sub">Este video te muestra como descargar DICloak, iniciar sesion con tu usuario y contrasena, y abrir las herramientas. Si lo ves antes de activar la prueba, aprovechas los 30 minutos completos.</p>
+    <div class="video">
+      <iframe src="https://www.youtube.com/embed/gzebVcIu1ZU" title="Como instalar DICloak y entrar a NeuroFlix" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+    </div>
+
+    <ol class="steps">
+      <li><b>Descarga DICloak</b><span>Es la app donde vives NeuroFlix. Disponible para Windows y Mac.</span></li>
+      <li><b>Inicia sesion</b><span>Usa el usuario y la contrasena que te damos al activar la prueba.</span></li>
+      <li><b>Abre un perfil</b><span>Dentro tienes las mas de 35 herramientas listas para usar.</span></li>
+    </ol>
+  </section>
+
+  <section style="padding-top:10px">
+    <h2 class="sec">Preguntas rapidas</h2>
+    <div class="faq">
+      <details open>
+        <summary>Cuanto dura la prueba exactamente</summary>
+        <p>30 minutos desde que activas el formulario. En la pantalla veras un contador con el tiempo que te queda, y te avisamos por correo cuando falten 5 minutos.</p>
+      </details>
+      <details>
+        <summary>Necesito poner una tarjeta</summary>
+        <p>No. La prueba no pide datos de pago y no se cobra nada. Al terminar, tu decides si quieres el acceso completo.</p>
+      </details>
+      <details>
+        <summary>Que pasa cuando se acaba el tiempo</summary>
+        <p>La cuenta se cierra sola. Te llega un correo con el enlace para activar tu acceso completo si te gusto.</p>
+      </details>
+      <details>
+        <summary>Puedo pedir otra prueba despues</summary>
+        <p>La prueba es una por persona, y la validamos por correo y por WhatsApp. Si necesitas mas tiempo para decidir, escribenos y lo vemos.</p>
+      </details>
+      <details>
+        <summary>Funciona en mi computadora</summary>
+        <p>Si tienes Windows o Mac, si. Se usa dentro de la app DICloak, que descargas gratis desde el video de arriba.</p>
+      </details>
+    </div>
+  </section>
+
+  <footer>
+    NeuroFlix &middot; Soporte: <a href="mailto:soporte@neuroflix.pro">soporte@neuroflix.pro</a>
+  </footer>
+
+</div>
+
+
+<script>
+(function(){
+  var p = new URLSearchParams(location.search);
+  var a = (p.get('a') || p.get('afiliado') || '').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,20);
+  try { if (a) localStorage.setItem('nf_afi', a); else a = localStorage.getItem('nf_afi') || ''; } catch(e){}
+  if (a) { var el = document.getElementById('afi'); if (el) el.value = a; }
+})();
+</script>
+</body>
+</html>

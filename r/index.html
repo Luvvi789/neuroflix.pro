@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NeuroFlix</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="../files/logo1.png">
+<style>
+@font-face { font-family: LaObrige; src: url(../files/LaObrige.otf); }
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  background:#030014;color:#f4f0ff;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;
+  background-image:radial-gradient(60% 40% at 50% 0%, rgba(186,156,255,.18), transparent 65%);
+  background-repeat:no-repeat;
+}
+img{height:38px;margin-bottom:26px}
+h1{font-family:LaObrige,system-ui,sans-serif;font-size:24px;font-weight:600;margin-bottom:10px}
+p{color:#9d94b8;font-size:15px}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#ba9cff;margin:0 3px;animation:b 1.2s infinite}
+.dot:nth-child(2){animation-delay:.15s}.dot:nth-child(3){animation-delay:.3s}
+@keyframes b{0%,80%,100%{opacity:.25}40%{opacity:1}}
+a{color:#ba9cff}
+</style>
+</head>
+<body>
+<div>
+  <img src="../files/logo1.png" alt="NeuroFlix">
+  <h1>Un momento</h1>
+  <p id="txt">Te estamos llevando a NeuroFlix</p>
+  <p style="margin-top:18px"><span class="dot"></span><span class="dot"></span><span class="dot"></span></p>
+  <p style="margin-top:22px;font-size:13px">Si no avanza solo, <a id="manual" href="/prueba">entra aqui</a>.</p>
+</div>
+
+<script>
+(function () {
+  var PLANES = {
+    mensual:    'https://buy.stripe.com/fZu8wOdIidND5P3bmMabK00',
+    trimestral: 'https://buy.stripe.com/9B628qbAacJz3GVbmMabK03',
+    semestral:  'https://buy.stripe.com/eVq6oG1ZA8tjcdr3UkabK02',
+    anual:      'https://buy.stripe.com/6oU6oG33EbFvcdreyYabK01'
+  };
+
+  var params = new URLSearchParams(location.search);
+  var code = params.get('a') || params.get('r') || params.get('afiliado') || '';
+  var destino = (params.get('d') || params.get('destino') || '').toLowerCase();
+
+  // formato /r/CODIGO  o  /r/CODIGO/mensual
+  var parts = location.pathname.split('/').filter(Boolean);
+  var i = parts.indexOf('r');
+  if (i !== -1) {
+    if (!code && parts[i + 1]) code = parts[i + 1];
+    if (!destino && parts[i + 2]) destino = parts[i + 2].toLowerCase();
+  }
+
+  code = String(code).toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 20);
+
+  try { if (code) localStorage.setItem('nf_afi', code); } catch (e) {}
+
+  var url;
+  if (PLANES[destino]) {
+    url = PLANES[destino] + (code ? '?client_reference_id=' + code : '');
+    document.getElementById('txt').textContent = 'Te estamos llevando al pago seguro';
+  } else {
+    url = '/prueba' + (code ? '?a=' + code : '');
+    document.getElementById('txt').textContent = 'Te estamos llevando a tu prueba gratis';
+  }
+
+  if (code) {
+    try {
+      var ping = 'https://n8n-n8n.r4ojxc.easypanel.host/webhook/clic?c=' + encodeURIComponent(code) + '&d=' + encodeURIComponent(destino || 'prueba');
+      fetch(ping, { mode: 'no-cors', keepalive: true });
+    } catch (e) {}
+  }
+
+  document.getElementById('manual').setAttribute('href', url);
+  location.replace(url);
+})();
+</script>
+</body>
+</html>
