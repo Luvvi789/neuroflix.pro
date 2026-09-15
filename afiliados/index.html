@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Programa de afiliados NeuroFlix</title>
+<meta name="description" content="Gana 25% de comision recurrente por cada cliente que traigas a NeuroFlix. Pagos en USDT cada mes.">
+<link rel="icon" href="../files/logo1.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@font-face { font-family: LaObrige; src: url(../files/LaObrige.otf); }
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+html,body{overflow-x:hidden}
+body{
+  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  background:#030014;color:#f4f0ff;line-height:1.6;padding-bottom:50px;
+  background-image:
+    radial-gradient(60% 40% at 15% -5%, rgba(186,156,255,.20), transparent 60%),
+    radial-gradient(50% 35% at 90% 0%, rgba(229,156,255,.14), transparent 60%);
+  background-repeat:no-repeat;
+}
+a{color:#ba9cff}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+
+header{padding:22px 0;display:flex;align-items:center;justify-content:space-between;gap:16px}
+header img{height:32px;width:auto}
+.pill{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:#cfb8ff;border:1px solid rgba(207,184,255,.28);border-radius:999px;padding:6px 13px;white-space:nowrap}
+
+h1{font-family:LaObrige,'Inter',sans-serif;font-size:36px;line-height:1.1;letter-spacing:-.01em;margin:16px 0 12px}
+h1 em{font-style:normal;background:linear-gradient(92deg,#e59cff,#ba9cff 45%,#9cb2ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+@media(min-width:800px){h1{font-size:48px}}
+.lead{font-size:16.5px;color:#bfb6d8;max-width:40em}
+
+.nums{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:28px 0 6px}
+.num{background:rgba(255,255,255,.035);border:1px solid rgba(207,184,255,.16);border-radius:16px;padding:16px 18px}
+.num b{display:block;font-size:26px;color:#e59cff;line-height:1.2}
+.num span{font-size:12.5px;color:#9d94b8}
+@media(max-width:620px){.nums{grid-template-columns:1fr}}
+
+.card{background:rgba(255,255,255,.035);border:1px solid rgba(207,184,255,.16);border-radius:20px;padding:24px 22px;margin-top:26px;box-shadow:0 24px 70px -30px rgba(186,156,255,.5)}
+h2{font-family:LaObrige,'Inter',sans-serif;font-size:21px;margin-bottom:6px;letter-spacing:-.01em}
+.note{font-size:13.5px;color:#9d94b8;margin-bottom:18px}
+
+.pasos{list-style:none;counter-reset:p;display:grid;gap:13px;margin-top:16px}
+.pasos li{counter-increment:p;padding-left:40px;position:relative;font-size:14.5px;color:#bfb6d8}
+.pasos li::before{content:counter(p);position:absolute;left:0;top:1px;width:27px;height:27px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#12002b;background:linear-gradient(92deg,#e59cff,#9cb2ff)}
+
+.grid{display:grid;gap:12px;grid-template-columns:1fr 1fr}
+@media(max-width:620px){.grid{grid-template-columns:1fr}}
+.full{grid-column:1/-1}
+label{display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:#9d94b8;margin:0 0 6px}
+input,select,textarea{width:100%;padding:13px 14px;border-radius:11px;font-size:15px;font-family:inherit;border:1px solid rgba(207,184,255,.2);background:rgba(3,0,20,.6);color:#fff}
+input::placeholder,textarea::placeholder{color:#6d6486}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#ba9cff;box-shadow:0 0 0 3px rgba(186,156,255,.16)}
+textarea{min-height:80px;resize:vertical}
+option{background:#12082b}
+button{width:100%;margin-top:20px;padding:15px;border:none;border-radius:11px;cursor:pointer;font-family:inherit;font-size:16px;font-weight:700;color:#12002b;background:linear-gradient(92deg,#e59cff,#ba9cff 55%,#9cb2ff)}
+button:hover{filter:brightness(1.07)}
+.hint{font-size:12px;color:#7d7496;margin-top:5px}
+
+.faq{display:grid;gap:12px;margin-top:14px}
+details{background:rgba(255,255,255,.03);border:1px solid rgba(207,184,255,.13);border-radius:14px;padding:15px 17px}
+details[open]{border-color:rgba(186,156,255,.3)}
+summary{cursor:pointer;font-weight:600;font-size:15px;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'+';float:right;color:#ba9cff;font-size:19px;line-height:1}
+details[open] summary::after{content:'\2013'}
+details p{margin-top:10px;color:#a79ec2;font-size:14.5px}
+
+footer{border-top:1px solid rgba(207,184,255,.12);margin-top:34px;padding:26px 0 0;color:#6d6486;font-size:12.5px;text-align:center}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <img src="../files/logo1.png" alt="NeuroFlix">
+    <span class="pill">Programa de afiliados</span>
+  </header>
+
+  <h1>Gana <em>25% cada mes</em> por cada cliente que traigas</h1>
+  <p class="lead">NeuroFlix son mas de 35 herramientas de IA premium en una sola cuenta por 19,99 USD al mes. Tu compartes tu enlace, y cobras el 25% de cada pago que hagan tus referidos, mes tras mes, mientras sigan siendo clientes.</p>
+
+  <div class="nums">
+    <div class="num"><b>25%</b><span>de cada pago, siempre</span></div>
+    <div class="num"><b>5 USD</b><span>al mes por cliente mensual</span></div>
+    <div class="num"><b>USDT</b><span>te pagamos el dia 5 de cada mes</span></div>
+  </div>
+
+  <div class="card">
+    <h2>Como funciona</h2>
+    <ol class="pasos">
+      <li>Llenas el formulario de aqui abajo y revisamos tu solicitud.</li>
+      <li>Te aprobamos y recibes tu enlace personal por correo y WhatsApp.</li>
+      <li>Lo compartes con tu audiencia. Cada venta queda registrada a tu nombre automaticamente.</li>
+      <li>El dia 5 de cada mes te transferimos en USDT lo acumulado del mes anterior.</li>
+    </ol>
+  </div>
+
+  <div class="card" id="registro">
+    <h2>Solicita tu enlace</h2>
+    <p class="note">Te respondemos en menos de 24 horas.</p>
+
+    <form method="POST" action="https://n8n-n8n.r4ojxc.easypanel.host/webhook/afiliados">
+      <div class="grid">
+        <div>
+          <label for="nombre">Nombre completo</label>
+          <input id="nombre" name="nombre" required autocomplete="name" placeholder="Juan Perez">
+        </div>
+        <div>
+          <label for="telefono">WhatsApp con codigo de pais</label>
+          <input id="telefono" name="telefono" required autocomplete="tel" placeholder="+51 999 888 777">
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required autocomplete="email" placeholder="tucorreo@gmail.com">
+        </div>
+        <div>
+          <label for="pais">Pais</label>
+          <input id="pais" name="pais" required placeholder="Peru">
+        </div>
+        <div class="full">
+          <label for="codigo">Codigo que quieres para tu enlace</label>
+          <input id="codigo" name="codigo" required placeholder="JUAN25">
+          <p class="hint">Solo letras y numeros. Tu enlace quedara asi: neuroflix.pro/r/TUCODIGO</p>
+        </div>
+        <div class="full">
+          <label for="audiencia">Donde vas a promocionar</label>
+          <textarea id="audiencia" name="audiencia" required placeholder="Instagram @micuenta, 12 mil seguidores de emprendimiento. Tambien un grupo de WhatsApp con 400 personas."></textarea>
+        </div>
+        <div>
+          <label for="plataforma">Donde te pagamos</label>
+          <select id="plataforma" name="plataforma">
+            <option value="Binance">Binance</option>
+            <option value="Bybit">Bybit</option>
+            <option value="OKX">OKX</option>
+            <option value="Otra wallet">Otra wallet USDT</option>
+          </select>
+        </div>
+        <div>
+          <label for="red">Red</label>
+          <select id="red" name="red">
+            <option value="TRC20">TRC20 (Tron), la mas barata</option>
+            <option value="BEP20">BEP20 (BNB Chain)</option>
+            <option value="Pay ID">Binance Pay ID / UID</option>
+          </select>
+        </div>
+        <div class="full">
+          <label for="wallet">Tu direccion USDT o tu ID de Binance/Bybit</label>
+          <input id="wallet" name="wallet" required placeholder="TXk9... o tu UID">
+          <p class="hint">Revisa bien este dato: los envios en cripto no se pueden revertir.</p>
+        </div>
+      </div>
+      <button type="submit">Enviar mi solicitud</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>Preguntas frecuentes</h2>
+    <div class="faq">
+      <details open>
+        <summary>Cuanto gano exactamente</summary>
+        <p>El 25% de cada pago de tus referidos. En el plan mensual de 19,99 USD son 5 USD por cliente <b>cada mes</b>, no una sola vez. Si traes 10 clientes que se quedan, son 50 USD todos los meses.</p>
+      </details>
+      <details>
+        <summary>Hasta cuando cobro por un cliente</summary>
+        <p>Mientras siga pagando. Si renueva 12 meses, cobras 12 veces por el. Si se da de baja, dejas de cobrar por el.</p>
+      </details>
+      <details>
+        <summary>Cuando y como me pagan</summary>
+        <p>El dia 5 de cada mes, en USDT, a la wallet que registres. Se paga lo acumulado del mes anterior, con un minimo de 20 USD; si no llegas, se acumula para el mes siguiente.</p>
+      </details>
+      <details>
+        <summary>Como saben que la venta es mia</summary>
+        <p>Tu enlace lleva tu codigo. Cuando alguien compra por el, la venta queda registrada a tu nombre en nuestro sistema, de forma automatica y para siempre.</p>
+      </details>
+      <details>
+        <summary>Necesito ser cliente para ser afiliado</summary>
+        <p>No, pero ayuda mucho conocer el producto. Puedes probarlo gratis 30 minutos en <a href="/prueba">neuroflix.pro/prueba</a> antes de promocionarlo.</p>
+      </details>
+    </div>
+  </div>
+
+  <footer>
+    NeuroFlix &middot; Dudas: <a href="mailto:soporte@neuroflix.pro">soporte@neuroflix.pro</a>
+  </footer>
+
+</div>
+
+</body>
+</html>
