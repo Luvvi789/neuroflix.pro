@@ -68,6 +68,13 @@ a{color:#ba9cff}
     document.getElementById('txt').textContent = 'Te estamos llevando a tu prueba gratis';
   }
 
+  if (code) {
+    try {
+      var ping = 'https://n8n-n8n.r4ojxc.easypanel.host/webhook/clic?c=' + encodeURIComponent(code) + '&d=' + encodeURIComponent(destino || 'prueba');
+      fetch(ping, { mode: 'no-cors', keepalive: true });
+    } catch (e) {}
+  }
+
   document.getElementById('manual').setAttribute('href', url);
   location.replace(url);
 })();
