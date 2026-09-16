@@ -95,6 +95,7 @@ footer{border-top:1px solid rgba(207,184,255,.12);margin-top:34px;padding:26px 0
     <ol class="pasos">
       <li>Llenas el formulario de aqui abajo. Te toma un minuto.</li>
       <li>Tu enlace y la clave de tu panel aparecen en pantalla al instante, y te llegan tambien por correo.</li>
+      <li>Entras a tu panel y cargas donde quieres cobrar: Binance, Bybit, OKX u otra wallet USDT.</li>
       <li>Lo compartes con tu audiencia. Cada venta queda registrada a tu nombre automaticamente.</li>
       <li>El dia 5 de cada mes te transferimos en USDT lo acumulado del mes anterior.</li>
     </ol>
@@ -102,7 +103,7 @@ footer{border-top:1px solid rgba(207,184,255,.12);margin-top:34px;padding:26px 0
 
   <div class="card" id="registro">
     <h2>Crea tu enlace</h2>
-    <p class="note">Sin aprobacion y sin esperas: tu enlace queda activo al enviar el formulario.</p>
+    <p class="note">Cinco datos y listo. Tu enlace queda activo al enviar el formulario, sin aprobacion ni esperas. Donde cobrar lo pones despues, con calma, desde tu panel.</p>
 
     <form method="POST" action="/registro">
       <div class="grid">
@@ -128,30 +129,9 @@ footer{border-top:1px solid rgba(207,184,255,.12);margin-top:34px;padding:26px 0
           <p class="hint">Solo letras y numeros. Tu enlace quedara asi: neuroflix.pro/r/TUCODIGO</p>
         </div>
         <div class="full">
-          <label for="audiencia">Donde vas a promocionar</label>
-          <textarea id="audiencia" name="audiencia" required placeholder="Instagram @micuenta, 12 mil seguidores de emprendimiento. Tambien un grupo de WhatsApp con 400 personas."></textarea>
-        </div>
-        <div>
-          <label for="plataforma">Donde te pagamos</label>
-          <select id="plataforma" name="plataforma">
-            <option value="Binance">Binance</option>
-            <option value="Bybit">Bybit</option>
-            <option value="OKX">OKX</option>
-            <option value="Otra wallet">Otra wallet USDT</option>
-          </select>
-        </div>
-        <div>
-          <label for="red">Red</label>
-          <select id="red" name="red">
-            <option value="TRC20">TRC20 (Tron), la mas barata</option>
-            <option value="BEP20">BEP20 (BNB Chain)</option>
-            <option value="Pay ID">Binance Pay ID / UID</option>
-          </select>
-        </div>
-        <div class="full">
-          <label for="wallet">Tu direccion USDT o tu ID de Binance/Bybit</label>
-          <input id="wallet" name="wallet" required placeholder="TXk9... o tu UID">
-          <p class="hint">Revisa bien este dato: los envios en cripto no se pueden revertir.</p>
+          <label for="audiencia">Donde vas a promocionar <span style="text-transform:none;letter-spacing:0;color:#6d6486">(opcional)</span></label>
+          <textarea id="audiencia" name="audiencia" placeholder="Instagram @micuenta, 12 mil seguidores de emprendimiento. Tambien un grupo de WhatsApp con 400 personas."></textarea>
+          <p class="hint">Nos ayuda a darte ideas que funcionen en tu canal, pero puedes dejarlo en blanco.</p>
         </div>
       </div>
       <button type="submit">Crear mi enlace ahora</button>
@@ -171,7 +151,7 @@ footer{border-top:1px solid rgba(207,184,255,.12);margin-top:34px;padding:26px 0
       </details>
       <details>
         <summary>Cuando y como me pagan</summary>
-        <p>El dia 5 de cada mes, en USDT, a la wallet que registres. Se paga lo acumulado del mes anterior, con un minimo de 20 USD; si no llegas, se acumula para el mes siguiente.</p>
+        <p>El dia 5 de cada mes, en USDT. Tu wallet la cargas cuando quieras desde tu panel de afiliado, no hace falta tenerla a mano ahora. Se paga lo acumulado del mes anterior, con un minimo de 20 USD; si no llegas, se acumula para el mes siguiente.</p>
       </details>
       <details>
         <summary>Como saben que la venta es mia</summary>
