@@ -24,6 +24,16 @@
       "destination": "https://n8n-n8n.r4ojxc.easypanel.host/webhook/afiliados-3f7b91c2"
     },
     {
+      "source": "/campana-8d2e4a71",
+      "has": [
+        {
+          "type": "host",
+          "value": "panel.neuroflix.pro"
+        }
+      ],
+      "destination": "https://n8n-n8n.r4ojxc.easypanel.host/webhook/campana-8d2e4a71"
+    },
+    {
       "source": "/entrar",
       "has": [
         {
