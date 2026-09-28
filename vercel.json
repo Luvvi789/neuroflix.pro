@@ -10,6 +10,16 @@
   "rewrites": [
     {
       "source": "/:clave",
+      "has": [{ "type": "host", "value": "google2.neuroflix.pro" }],
+      "destination": "https://n8n-n8n.r4ojxc.easypanel.host/webhook/pagina-lowcarb?key=:clave"
+    },
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "google2.neuroflix.pro" }],
+      "destination": "https://n8n-n8n.r4ojxc.easypanel.host/webhook/pagina-lowcarb"
+    },
+    {
+      "source": "/:clave",
       "has": [{ "type": "host", "value": "google.neuroflix.pro" }],
       "destination": "https://n8n-n8n.r4ojxc.easypanel.host/webhook/pagina-google?key=:clave"
     },
