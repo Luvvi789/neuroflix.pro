@@ -2,6 +2,12 @@
   "redirects": [
     {
       "source": "/",
+      "has": [{ "type": "host", "value": "studio.neuroflix.pro" }],
+      "destination": "/app",
+      "permanent": false
+    },
+    {
+      "source": "/",
       "has": [{ "type": "host", "value": "panel.neuroflix.pro" }],
       "destination": "/entrar",
       "permanent": false
