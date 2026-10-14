@@ -70,6 +70,7 @@
     { "source": "/registro", "destination": "https://n8n-n8n.r4ojxc.easypanel.host/webhook/afiliados" },
     { "source": "/activar", "destination": "https://n8n-n8n.r4ojxc.easypanel.host/webhook/prueba-gratis" },
     { "source": "/cripto", "destination": "https://n8n-n8n.r4ojxc.easypanel.host/webhook/cripto-5b8e2d" },
-    { "source": "/cripto-admin", "destination": "https://n8n-n8n.r4ojxc.easypanel.host/webhook/cripto-5b8e2d?admin=1" }
+    { "source": "/cripto-admin", "destination": "https://n8n-n8n.r4ojxc.easypanel.host/webhook/cripto-5b8e2d?admin=1" },
+    { "source": "/finanzas", "destination": "https://n8n-n8n.r4ojxc.easypanel.host/webhook/finanzas-7b3e9d42" }
   ]
 }
