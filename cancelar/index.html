@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cancelar suscripción · NeuroFlix</title>
+<meta name="description" content="Cancela o gestiona tu suscripción de NeuroFlix tú mismo, en 1 minuto.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;600&display=swap">
+<style>
+:root{--bg:#eef1f6;--card:#fff;--tx:#0f172a;--mut:#475569;--dim:#64748b;--line:#dbe1ea;--soft:#f5f7fb;--ac:#0b5cff;--acs:#e6efff;--ok:#16a34a}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif}
+body{padding-inline:16px;padding-block:32px 60px}
+.wrap{max-width:540px;margin:0 auto;display:flex;flex-direction:column;gap:22px;background:var(--card);border-radius:28px;padding:32px 28px;box-shadow:0 20px 50px rgba(15,23,42,.08),0 2px 6px rgba(15,23,42,.04)}
+header{display:flex;justify-content:center}
+header a{font:600 18px/1 'Oswald','Inter',sans-serif;letter-spacing:.6px;text-transform:uppercase;color:var(--tx);text-decoration:none}
+header span{color:var(--ac)}
+h1{font:600 28px/1.15 'Oswald','Inter',sans-serif;margin:0 0 6px;text-align:center;text-wrap:balance}
+.sub{color:var(--dim);margin:0;text-align:center}
+ol.pasos{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px;counter-reset:p}
+ol.pasos li{display:flex;gap:12px;align-items:flex-start;color:var(--mut)}
+ol.pasos li::before{counter-increment:p;content:counter(p);flex:none;width:28px;height:28px;border-radius:50%;background:var(--acs);color:var(--ac);font-weight:700;font-size:14px;display:grid;place-items:center;margin-top:-1px}
+ol.pasos b{color:var(--tx)}
+.btn{display:block;width:100%;border:0;border-radius:12px;padding:15px;font:inherit;font-weight:700;font-size:16px;background:var(--ac);color:#fff;text-align:center;text-decoration:none;transition:filter .15s}
+.btn:hover{filter:brightness(1.07)}
+.btn.sec{background:var(--acs);color:var(--ac);font-size:15px}
+.tambien{font-size:13.5px;color:var(--dim);text-align:center;margin:-8px 0 0}
+.caja{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.caja h2{font-size:15px;margin:0 0 8px;color:var(--tx)}
+.caja ul{margin:0;padding-left:18px;color:var(--mut);font-size:14px;display:flex;flex-direction:column;gap:6px}
+.caja b{color:var(--tx)}
+.pie{color:var(--dim);font-size:13px;text-align:center;margin:0}
+.pie a{color:var(--ac);font-weight:600}
+a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+@media (max-width:520px){.wrap{padding:26px 18px;border-radius:22px}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header><a href="https://neuroflix.pro/">Neuro<span>Flix</span></a></header>
+<div>
+<h1>Cancelar o gestionar tu suscripción</h1>
+<p class="sub">Lo haces tú mismo en 1 minuto, sin tener que escribirnos.</p>
+</div>
+
+<ol class="pasos">
+<li><span>Toca el botón de abajo. Se abre el <b>portal seguro de Stripe</b>, la empresa que procesa nuestros pagos con tarjeta.</span></li>
+<li><span>Escribe <b>el mismo email con el que pagaste</b>. Stripe te envía un enlace a ese correo (si no llega en 2 minutos, revisa spam o promociones).</span></li>
+<li><span>Abre el enlace y toca <b>"Cancelar suscripción"</b>. No se te volverá a cobrar y <b>mantienes tu acceso hasta el final del período que ya pagaste</b>.</span></li>
+</ol>
+
+<a class="btn" href="https://billing.stripe.com/p/login/fZu8wOdIidND5P3bmMabK00" target="_blank" rel="noopener">Ir al portal de Stripe</a>
+<p class="tambien">Ahí también puedes cambiar tu tarjeta y descargar tus facturas.</p>
+
+<div class="caja">
+<h2>¿No te aparece ninguna suscripción?</h2>
+<ul>
+<li>Si pagaste con <b>cripto (Binance o Bybit)</b> o con un <b>pago único</b>, no tienes renovación automática: <b>no hay nada que cancelar</b>. Tu acceso termina solo al final del período.</li>
+<li>Si pagaste con <b>otro email</b>, entra al portal con ese email.</li>
+<li>¿Tienes varias suscripciones o algo no cuadra? Escríbenos y lo revisamos.</li>
+</ul>
+</div>
+
+<a class="btn sec" href="https://wa.me/5511910346676?text=Hola%2C%20necesito%20ayuda%20para%20cancelar%20mi%20suscripci%C3%B3n%20de%20NeuroFlix" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+<p class="pie">O por email a <a href="mailto:soporte@neuroflix.pro">soporte@neuroflix.pro</a></p>
+</main>
+</body>
+</html>
