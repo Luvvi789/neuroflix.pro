@@ -76,6 +76,8 @@
     },
     { "source": "/r/:codigo", "destination": "/r/index.html" },
     { "source": "/r/:codigo/:plan", "destination": "/r/index.html" },
+    { "source": "/gemini3/:clave", "destination": "https://n8n-n8n.r4ojxc.easypanel.host/webhook/pagina-google3?key=:clave" },
+    { "source": "/gemini3", "destination": "https://n8n-n8n.r4ojxc.easypanel.host/webhook/pagina-google3" },
     { "source": "/codigo", "destination": "https://n8n-n8n.r4ojxc.easypanel.host/webhook/codigo" },
     { "source": "/registro", "destination": "https://n8n-n8n.r4ojxc.easypanel.host/webhook/afiliados" },
     { "source": "/activar", "destination": "https://n8n-n8n.r4ojxc.easypanel.host/webhook/prueba-gratis" },
