@@ -21,6 +21,16 @@
     },
     {
       "source": "/:clave",
+      "has": [{ "type": "host", "value": "google3.neuroflix.pro" }],
+      "destination": "https://n8n-n8n.r4ojxc.easypanel.host/webhook/pagina-google3?key=:clave"
+    },
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "google3.neuroflix.pro" }],
+      "destination": "https://n8n-n8n.r4ojxc.easypanel.host/webhook/pagina-google3"
+    },
+    {
+      "source": "/:clave",
       "has": [{ "type": "host", "value": "google2.neuroflix.pro" }],
       "destination": "https://n8n-n8n.r4ojxc.easypanel.host/webhook/pagina-lowcarb?key=:clave"
     },
