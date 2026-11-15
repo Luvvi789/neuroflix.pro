@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Prueba de video · NeuroFlix</title>
+<style>
+  :root {
+    --fondo: #0d0e10;
+    --tarjeta: #17191c;
+    --borde: #272a2f;
+    --texto: #eceef1;
+    --suave: #9aa1ab;
+    --ok: #3ccf91;
+    --aviso: #f2b84b;
+    --falla: #ff6b6b;
+    --acento: #8ab4ff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--fondo);
+    color: var(--texto);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    padding-inline: 16px;
+  }
+  main { max-width: 680px; margin: 0 auto; padding-block: 32px 48px; display: grid; gap: 20px; }
+  h1 { font-size: 24px; line-height: 1.2; margin: 0; text-wrap: balance; }
+  .sub { color: var(--suave); margin: 6px 0 0; }
+  .veredicto {
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    padding: 18px 20px;
+    background: var(--tarjeta);
+  }
+  .veredicto strong { display: block; font-size: 17px; margin-bottom: 4px; }
+  .veredicto.ok { border-color: var(--ok); }
+  .veredicto.aviso { border-color: var(--aviso); }
+  .veredicto.falla { border-color: var(--falla); }
+  ul { list-style: none; margin: 0; padding: 0; border: 1px solid var(--borde); border-radius: 12px; overflow: hidden; }
+  li { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; padding: 14px 16px; border-top: 1px solid var(--borde); background: var(--tarjeta); }
+  li:first-child { border-top: 0; }
+  .nombre { font-weight: 600; }
+  .detalle { grid-column: 1 / -1; color: var(--suave); font-size: 14px; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+  .pill { font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; align-self: start; white-space: nowrap; }
+  .pill.espera { color: var(--suave); border: 1px solid var(--borde); }
+  .pill.ok { color: #0d0e10; background: var(--ok); }
+  .pill.aviso { color: #0d0e10; background: var(--aviso); }
+  .pill.falla { color: #0d0e10; background: var(--falla); }
+  .acciones { display: flex; flex-wrap: wrap; gap: 10px; }
+  button {
+    font: inherit; font-weight: 600; cursor: pointer;
+    border-radius: 999px; padding: 10px 18px;
+    border: 1px solid var(--borde); background: var(--tarjeta); color: var(--texto);
+  }
+  button.principal { background: var(--texto); color: var(--fondo); border-color: var(--texto); }
+  button:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+  button:disabled { opacity: .5; cursor: default; }
+  .nota { color: var(--suave); font-size: 13px; margin: 0; }
+  #muestra { width: 1px; height: 1px; opacity: 0; position: absolute; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Prueba de video de NeuroFlix Studio</h1>
+    <p class="sub">Revisa si este navegador y esta conexión pueden reproducir los videos del studio. Tarda menos de un minuto.</p>
+  </header>
+
+  <div id="veredicto" class="veredicto"><strong>Probando…</strong><span>No cierres esta pestaña.</span></div>
+
+  <ul id="lista">
+    <li id="p-formato"><span class="nombre">Formato de video (MP4 · H.264 + AAC)</span><span class="pill espera">Esperando</span><span class="detalle">—</span></li>
+    <li id="p-muestra"><span class="nombre">Reproducir un video de muestra</span><span class="pill espera">Esperando</span><span class="detalle">—</span></li>
+    <li id="p-partes"><span class="nombre">Descarga por partes</span><span class="pill espera">Esperando</span><span class="detalle">—</span></li>
+    <li id="p-velocidad"><span class="nombre">Velocidad de descarga</span><span class="pill espera">Esperando</span><span class="detalle">—</span></li>
+    <li id="p-servidor"><span class="nombre">Respuesta del servidor de videos</span><span class="pill espera">Esperando</span><span class="detalle">—</span></li>
+    <li id="p-navegador"><span class="nombre">Navegador</span><span class="pill espera">Info</span><span class="detalle">—</span></li>
+  </ul>
+
+  <div class="acciones">
+    <button id="copiar" class="principal" disabled>Copiar resultado</button>
+    <button id="repetir" disabled>Repetir prueba</button>
+  </div>
+  <p class="nota">Copia el resultado y envíalo por WhatsApp al soporte de NeuroFlix.</p>
+  <video id="muestra" muted playsinline preload="auto"></video>
+</main>
+
+<script>
+(function () {
+  var MUESTRA = '/prueba-video/muestra.mp4';
+  var resultados = {};
+
+  function marcar(id, estado, texto, detalle) {
+    var li = document.getElementById(id);
+    var pill = li.querySelector('.pill');
+    pill.className = 'pill ' + estado;
+    pill.textContent = texto;
+    li.querySelector('.detalle').textContent = detalle;
+    resultados[id] = { estado: estado, texto: texto, detalle: detalle, nombre: li.querySelector('.nombre').textContent };
+  }
+
+  function sinCache(url) { return url + (url.indexOf('?') < 0 ? '?' : '&') + 'nc=' + Date.now() + Math.random().toString(36).slice(2, 7); }
+
+  function conTiempo(promesa, ms) {
+    return Promise.race([promesa, new Promise(function (_, ko) { setTimeout(function () { ko(new Error('tiempo')); }, ms); })]);
+  }
+
+  function pruebaFormato() {
+    var v = document.createElement('video');
+    var h264 = v.canPlayType('video/mp4; codecs="avc1.64001F"');
+    var aac = v.canPlayType('audio/mp4; codecs="mp4a.40.2"');
+    var mse = !!(window.MediaSource && MediaSource.isTypeSupported && MediaSource.isTypeSupported('video/mp4; codecs="avc1.64001F, mp4a.40.2"'));
+    var ok = h264 !== '' && aac !== '';
+    marcar('p-formato', ok ? 'ok' : 'falla', ok ? 'OK' : 'No soportado',
+      'H.264: ' + (h264 || 'no') + ' · AAC: ' + (aac || 'no') + ' · MSE: ' + (mse ? 'sí' : 'no'));
+    return ok;
+  }
+
+  function pruebaMuestra() {
+    return new Promise(function (listo) {
+      var v = document.getElementById('muestra');
+      var t0 = performance.now();
+      var fin = false;
+      function terminar(estado, texto, detalle) {
+        if (fin) return; fin = true;
+        marcar('p-muestra', estado, texto, detalle);
+        v.removeAttribute('src'); v.load();
+        listo(estado);
+      }
+      v.oncanplay = function () {
+        var ms = Math.round(performance.now() - t0);
+        terminar(ms < 6000 ? 'ok' : 'aviso', ms < 6000 ? 'OK' : 'Lento', 'Listo para reproducir en ' + (ms / 1000).toFixed(1) + ' s (video de 0,35 MB, igual de armado que los de Flow)');
+      };
+      v.onerror = function () {
+        var c = v.error ? v.error.code : '?';
+        var motivo = { 1: 'cancelado', 2: 'error de red', 3: 'no se pudo decodificar', 4: 'formato no soportado' }[c] || 'desconocido';
+        terminar('falla', 'Falla', 'Error ' + c + ': ' + motivo);
+      };
+      setTimeout(function () { terminar('falla', 'Se traba', 'No arrancó en 25 s: el video se queda cargando'); }, 25000);
+      v.src = sinCache(MUESTRA);
+    });
+  }
+
+  function pruebaPartes() {
+    var t0 = performance.now();
+    return conTiempo(fetch(sinCache(MUESTRA), { headers: { Range: 'bytes=0-1' }, cache: 'no-store' }), 20000)
+      .then(function (r) { return r.arrayBuffer().then(function (b) { return { r: r, n: b.byteLength }; }); })
+      .then(function (x) {
+        var ms = Math.round(performance.now() - t0);
+        var ok = x.r.status === 206 && x.n === 2;
+        marcar('p-partes', ok ? 'ok' : 'falla', ok ? 'OK' : 'Bloqueada',
+          ok ? 'El servidor entregó solo la parte pedida (206) en ' + ms + ' ms'
+             : 'Se pidió una parte y llegó ' + x.r.status + ' con ' + x.n + ' bytes: algo en el medio (proxy o antivirus) no deja descargar por partes');
+        return ok;
+      })
+      .catch(function (e) { marcar('p-partes', 'falla', 'Falla', 'No respondió: ' + e.message); return false; });
+  }
+
+  function pruebaVelocidad() {
+    var veces = 8;
+    var bytes = 0;
+    var t0 = performance.now();
+    var primero = null;
+    function una(i) {
+      if (i >= veces) return Promise.resolve();
+      return fetch(sinCache(MUESTRA), { cache: 'no-store' }).then(function (r) {
+        if (primero === null) primero = Math.round(performance.now() - t0);
+        return r.arrayBuffer();
+      }).then(function (b) {
+        bytes += b.byteLength;
+        var s = (performance.now() - t0) / 1000;
+        marcar('p-velocidad', 'espera', 'Midiendo', ((bytes * 8) / s / 1e6).toFixed(1) + ' Mbps hasta ahora…');
+        return una(i + 1);
+      });
+    }
+    return conTiempo(una(0), 60000).then(function () {
+      var s = (performance.now() - t0) / 1000;
+      var mbps = (bytes * 8) / s / 1e6;
+      var seg8 = Math.round(8 * 8 / mbps);
+      var estado = mbps >= 8 ? 'ok' : mbps >= 3 ? 'aviso' : 'falla';
+      marcar('p-velocidad', estado, estado === 'ok' ? 'OK' : estado === 'aviso' ? 'Justa' : 'Muy lenta',
+        mbps.toFixed(1) + ' Mbps · primera respuesta en ' + primero + ' ms · un video de 8 MB tardaría ' + (seg8 < 1 ? 'menos de 1 s' : 'unos ' + seg8 + ' s') + ' en bajar completo');
+      return mbps;
+    }).catch(function (e) {
+      var s = (performance.now() - t0) / 1000;
+      var mbps = (bytes * 8) / Math.max(s, 0.001) / 1e6;
+      marcar('p-velocidad', 'falla', 'Muy lenta', 'En ' + Math.round(s) + ' s solo bajaron ' + (bytes / 1048576).toFixed(1) + ' MB (' + mbps.toFixed(1) + ' Mbps)');
+      return mbps;
+    });
+  }
+
+  function pruebaServidor() {
+    var t0 = performance.now();
+    return conTiempo(fetch(sinCache('/api/clip?clip=prueba'), { headers: { Range: 'bytes=0-1' }, cache: 'no-store' }), 20000)
+      .then(function (r) { return r.arrayBuffer().then(function () { return r; }); })
+      .then(function (r) {
+        var ms = Math.round(performance.now() - t0);
+        var ok = r.status < 500;
+        marcar('p-servidor', ok ? (ms < 4000 ? 'ok' : 'aviso') : 'falla', ok ? (ms < 4000 ? 'OK' : 'Lento') : 'Falla', 'Respondió ' + r.status + ' en ' + ms + ' ms');
+        return ok;
+      })
+      .catch(function (e) { marcar('p-servidor', 'falla', 'Falla', 'No respondió: ' + e.message); return false; });
+  }
+
+  function infoNavegador() {
+    var ua = navigator.userAgent;
+    var m = ua.match(/(Edg|OPR|Chrome|Firefox|Version)\/([\d.]+)/);
+    var c = navigator.connection || {};
+    var zona = '';
+    try { zona = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (e) {}
+    marcar('p-navegador', 'espera', 'Info',
+      (m ? m[1].replace('Edg', 'Edge').replace('OPR', 'Opera') + ' ' + m[2] : 'desconocido') + ' · ' + (navigator.platform || '') +
+      (c.downlink ? ' · red estimada ' + c.downlink + ' Mbps' : '') + (zona ? ' · zona ' + zona : '') + ' · ' + location.host);
+  }
+
+  function veredicto(formatoOk, muestra, partesOk, mbps, servidorOk) {
+    var caja = document.getElementById('veredicto');
+    var clase, titulo, texto;
+    if (!formatoOk || muestra === 'falla' && resultados['p-muestra'].texto === 'Falla') {
+      clase = 'falla'; titulo = 'Este navegador no puede reproducir los videos de Flow';
+      texto = 'No soporta el formato MP4 (H.264 + AAC). Abre el studio en Google Chrome normal (fuera de este perfil o programa).';
+    } else if (!partesOk) {
+      clase = 'falla'; titulo = 'Algo en esta conexión bloquea los videos';
+      texto = 'Un proxy, VPN o antivirus no deja descargar por partes, y por eso el video se queda cargando. Prueba sin el proxy del perfil o desde Chrome normal.';
+    } else if (muestra === 'falla' || mbps < 3) {
+      clase = 'falla'; titulo = 'La conexión de este navegador es muy lenta';
+      texto = 'Con ' + mbps.toFixed(1) + ' Mbps los videos tardan mucho en arrancar. Si este perfil usa un proxy, ese suele ser el freno: prueba desde Chrome normal.';
+    } else if (!servidorOk) {
+      clase = 'aviso'; titulo = 'No se pudo comprobar el servidor de videos';
+      texto = 'El navegador funciona, pero el servidor no respondió. Avisa al soporte con este resultado.';
+    } else if (mbps < 8 || muestra === 'aviso') {
+      clase = 'aviso'; titulo = 'Funciona, pero la conexión es justa';
+      texto = 'Los videos van a reproducir, aunque pueden tardar unos segundos en arrancar.';
+    } else {
+      clase = 'ok'; titulo = 'Todo bien: este navegador puede reproducir los videos';
+      texto = 'Si un video sigue trabado, envía este resultado y el nombre del video al soporte.';
+    }
+    caja.className = 'veredicto ' + clase;
+    caja.innerHTML = '';
+    var s = document.createElement('strong'); s.textContent = titulo;
+    var p = document.createElement('span'); p.textContent = texto;
+    caja.appendChild(s); caja.appendChild(p);
+    resultados.veredicto = titulo + '. ' + texto;
+  }
+
+  function textoParaCopiar() {
+    var lineas = ['Prueba de video NeuroFlix (' + new Date().toLocaleString() + ')', resultados.veredicto || '', ''];
+    ['p-formato', 'p-muestra', 'p-partes', 'p-velocidad', 'p-servidor', 'p-navegador'].forEach(function (id) {
+      var r = resultados[id];
+      if (r) lineas.push('• ' + r.nombre + ': ' + r.texto + ' — ' + r.detalle);
+    });
+    return lineas.join('\n');
+  }
+
+  function correr() {
+    document.getElementById('copiar').disabled = true;
+    document.getElementById('repetir').disabled = true;
+    infoNavegador();
+    var formatoOk = pruebaFormato();
+    var muestra, partesOk, mbps, servidorOk;
+    pruebaMuestra()
+      .then(function (m) { muestra = m; return pruebaPartes(); })
+      .then(function (p) { partesOk = p; return pruebaVelocidad(); })
+      .then(function (v) { mbps = v; return pruebaServidor(); })
+      .then(function (s) { servidorOk = s; })
+      .catch(function () {})
+      .then(function () {
+        veredicto(formatoOk, muestra, partesOk, mbps || 0, servidorOk);
+        document.getElementById('copiar').disabled = false;
+        document.getElementById('repetir').disabled = false;
+      });
+  }
+
+  document.getElementById('copiar').addEventListener('click', function () {
+    var t = textoParaCopiar();
+    var b = this;
+    function hecho() { b.textContent = 'Copiado'; setTimeout(function () { b.textContent = 'Copiar resultado'; }, 2000); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(t).then(hecho, function () { window.prompt('Copia este texto:', t); });
+    } else { window.prompt('Copia este texto:', t); }
+  });
+  document.getElementById('repetir').addEventListener('click', correr);
+  correr();
+})();
+</script>
+</body>
+</html>
