@@ -59,6 +59,11 @@
   button:disabled { opacity: .5; cursor: default; }
   .nota { color: var(--suave); font-size: 13px; margin: 0; }
   #muestra { width: 1px; height: 1px; opacity: 0; position: absolute; }
+  h2 { font-size: 18px; margin: 0 0 6px; }
+  .real { border-top: 1px solid var(--borde); padding-top: 20px; display: grid; gap: 12px; }
+  .real input { flex: 1 1 260px; min-width: 0; font: inherit; padding: 10px 14px; border-radius: 999px; border: 1px solid var(--borde); background: var(--tarjeta); color: var(--texto); }
+  .real input:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+  pre { margin: 0; padding: 14px 16px; border: 1px solid var(--borde); border-radius: 12px; background: var(--tarjeta); font: 13px/1.6 ui-monospace, Consolas, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
 </style>
 </head>
 <body>
@@ -85,6 +90,18 @@
   </div>
   <p class="nota">Copia el resultado y envíalo por WhatsApp al soporte de NeuroFlix.</p>
   <video id="muestra" muted playsinline preload="auto"></video>
+
+  <section class="real">
+    <h2>Probar un video real</h2>
+    <p class="nota">En el studio, haz clic derecho sobre el video que se traba, elige <b>"Copiar dirección del video"</b> y pégala aquí.</p>
+    <div class="acciones">
+      <input id="urlReal" type="text" placeholder="Pega aquí la dirección del video" autocomplete="off" spellcheck="false">
+      <button id="probarReal" class="principal">Probar este video</button>
+    </div>
+    <pre id="salidaReal" hidden></pre>
+    <div class="acciones"><button id="copiarReal" hidden>Copiar resultado del video</button></div>
+    <video id="vReal" muted playsinline preload="auto" style="width:1px;height:1px;opacity:0;position:absolute"></video>
+  </section>
 </main>
 
 <script>
@@ -283,6 +300,109 @@
   });
   document.getElementById('repetir').addEventListener('click', correr);
   correr();
+
+  // ---- Prueba con un video real (la dirección nunca sale de esta página ni se copia en el resultado) ----
+  var sal = document.getElementById('salidaReal');
+  function linea(t) { sal.hidden = false; sal.textContent += t + '\n'; }
+  function ms(t0) { return Math.round(performance.now() - t0) + ' ms'; }
+  function pedir(url, rango, limite, espera) {
+    var ac = new AbortController();
+    var t0 = performance.now();
+    var reloj = setTimeout(function () { ac.abort(); }, espera || 30000);
+    var h = rango ? { Range: rango } : {};
+    return fetch(sinCache(url), { headers: h, cache: 'no-store', signal: ac.signal, credentials: 'same-origin' }).then(function (r) {
+      var cab = Math.round(performance.now() - t0);
+      var rd = r.body.getReader(); var n = 0;
+      function leer() {
+        return rd.read().then(function (x) {
+          if (x.done) return;
+          n += x.value.length;
+          if (limite && n >= limite) { ac.abort(); return; }
+          return leer();
+        });
+      }
+      return leer().catch(function () {}).then(function () {
+        clearTimeout(reloj);
+        return { status: r.status, cr: r.headers.get('content-range'), cl: r.headers.get('content-length'), n: n, cab: cab, total: Math.round(performance.now() - t0) };
+      });
+    }).catch(function (e) { clearTimeout(reloj); return { error: (e && e.name) || 'error', total: Math.round(performance.now() - t0) }; });
+  }
+  function txt(x) {
+    if (x.error) return 'FALLA (' + (x.error === 'AbortError' ? 'sin respuesta, cortado por tiempo' : x.error) + ') a los ' + x.total + ' ms';
+    return 'estado ' + x.status + ' · ' + x.n + ' bytes · cabecera ' + x.cab + ' ms · total ' + x.total + ' ms' + (x.cr ? ' · ' + x.cr : '');
+  }
+  function verVideo(v, src, espera) {
+    return new Promise(function (ok) {
+      var ev = []; var t0 = performance.now(); var fin = false;
+      var nombres = ['loadstart', 'progress', 'suspend', 'stalled', 'waiting', 'loadedmetadata', 'loadeddata', 'canplay', 'error', 'abort'];
+      function on(e) {
+        if (e.type === 'progress' && ev.length && ev[ev.length - 1].indexOf('progress') === 0) return;
+        ev.push(e.type + '@' + Math.round(performance.now() - t0));
+        if (e.type === 'canplay' || e.type === 'error') cerrar();
+      }
+      function cerrar() {
+        if (fin) return; fin = true;
+        var buf = 0; try { buf = v.buffered.length ? v.buffered.end(v.buffered.length - 1) : 0; } catch (e) {}
+        var r = (v.readyState >= 3 ? 'ARRANCA' : v.error ? 'ERROR ' + v.error.code : 'SE TRABA') + ' · listo=' + v.readyState + ' red=' + v.networkState + ' · cargado ' + buf.toFixed(1) + ' s · ' + ev.join(', ');
+        nombres.forEach(function (n) { v.removeEventListener(n, on); });
+        v.removeAttribute('src'); v.load();
+        ok(r);
+      }
+      nombres.forEach(function (n) { v.addEventListener(n, on); });
+      setTimeout(cerrar, espera);
+      v.src = src;
+    });
+  }
+  document.getElementById('probarReal').addEventListener('click', function () {
+    var b = this; var u;
+    try { u = new URL(document.getElementById('urlReal').value.trim(), location.href); } catch (e) { u = null; }
+    sal.textContent = '';
+    if (!u || u.origin !== location.origin || !u.searchParams.get('clip')) { linea('Esa no parece la dirección de un video del studio. Debe empezar con ' + location.origin + ' y contener "clip".'); return; }
+    var url = u.pathname + u.search;
+    b.disabled = true; document.getElementById('copiarReal').hidden = true;
+    linea('Prueba de video real · ' + new Date().toLocaleString());
+    var total = 0; var v = document.getElementById('vReal');
+    pedir(url, 'bytes=0-1').then(function (x) {
+      linea('1. Primeros 2 bytes: ' + txt(x));
+      var m = /\/(\d+)$/.exec(x.cr || ''); total = m ? Number(m[1]) : 0;
+      linea('   Tamaño del video: ' + (total ? (total / 1048576).toFixed(1) + ' MB' : 'desconocido'));
+      return total ? pedir(url, 'bytes=' + Math.max(total - 8000, 0) + '-') : { error: 'sin tamaño', total: 0 };
+    }).then(function (x) {
+      linea('2. Final del archivo (índice): ' + txt(x));
+      return pedir(url, 'bytes=0-', 262144);
+    }).then(function (x) {
+      linea('3. Inicio cortado a 256 KB: ' + txt(x));
+      return total ? pedir(url, 'bytes=' + Math.max(total - 8000, 0) + '-') : { error: 'sin tamaño', total: 0 };
+    }).then(function (x) {
+      linea('4. Final justo después del corte: ' + txt(x));
+      return Promise.all([pedir(url, 'bytes=0-', 262144), total ? pedir(url, 'bytes=' + Math.max(total - 8000, 0) + '-') : Promise.resolve({ error: 'sin tamaño', total: 0 }), pedir(url, 'bytes=6216-', 1048576)]);
+    }).then(function (xs) {
+      linea('5. Tres pedidos a la vez (como hace el reproductor):');
+      linea('   a) inicio: ' + txt(xs[0])); linea('   b) final: ' + txt(xs[1])); linea('   c) cuerpo 1 MB: ' + txt(xs[2]));
+      linea('6. Reproductor normal (hasta 40 s)…');
+      return verVideo(v, sinCache(url), 40000);
+    }).then(function (r) {
+      linea('   ' + r);
+      linea('7. Descarga completa de una vez (hasta 90 s)…');
+      var t0 = performance.now();
+      return conTiempo(fetch(sinCache(url), { cache: 'no-store', credentials: 'same-origin' }).then(function (r) { return r.blob().then(function (bl) { return { st: r.status, bl: bl, t: Math.round(performance.now() - t0) }; }); }), 90000)
+        .catch(function (e) { return { error: e.message, t: Math.round(performance.now() - t0) }; });
+    }).then(function (x) {
+      if (x.error) { linea('   FALLA: ' + x.error + ' a los ' + x.t + ' ms'); return null; }
+      linea('   estado ' + x.st + ' · ' + (x.bl.size / 1048576).toFixed(1) + ' MB en ' + (x.t / 1000).toFixed(1) + ' s');
+      var o = URL.createObjectURL(x.bl);
+      return verVideo(v, o, 15000).then(function (r) { URL.revokeObjectURL(o); linea('8. Reproducir la copia ya descargada: ' + r); });
+    }).catch(function (e) { linea('Error inesperado: ' + (e && e.message)); }).then(function () {
+      linea('Fin de la prueba.');
+      b.disabled = false; document.getElementById('copiarReal').hidden = false;
+    });
+  });
+  document.getElementById('copiarReal').addEventListener('click', function () {
+    var t = sal.textContent; var b = this;
+    function hecho() { b.textContent = 'Copiado'; setTimeout(function () { b.textContent = 'Copiar resultado del video'; }, 2000); }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(hecho, function () { window.prompt('Copia este texto:', t); });
+    else window.prompt('Copia este texto:', t);
+  });
 })();
 </script>
 </body>
