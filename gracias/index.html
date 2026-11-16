@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¡Gracias por unirte a NeuroFlix!</title>
+<meta name="description" content="Pago confirmado. Tus datos de acceso a NeuroFlix llegan a tu email en unos minutos.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#030014">
+<link rel="icon" href="/files/logo1.png">
+<link rel="apple-touch-icon" href="/files/logo1.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  @font-face { font-family: LaObrige; src: url(/files/LaObrige.otf); font-display: swap; }
+  :root {
+    --fondo: #030014;
+    --texto: #ffffff;
+    --suave: rgba(239, 237, 253, .7);
+    --tenue: rgba(239, 237, 253, .55);
+    --borde: rgba(255, 255, 255, .1);
+    --tarjeta: rgba(255, 255, 255, .03);
+    --lila: #ba9cff;
+    --verde: #79ffbf;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+  html, body { overflow-x: hidden; }
+  body {
+    background: var(--fondo);
+    color: var(--texto);
+    font: 16px/1.55 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    padding-inline: 16px;
+    position: relative;
+  }
+  body::before {
+    content: ""; position: fixed; top: -220px; left: 50%; transform: translateX(-50%);
+    width: 1440px; height: 900px; pointer-events: none; z-index: 0;
+    background: radial-gradient(37.74% 81.78% at 50% 26.56%, rgba(148, 101, 255, .14) 0%, rgba(3, 0, 20, 0) 100%);
+  }
+  main { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; padding-block: 40px 56px; display: grid; gap: 28px; }
+  .marca { display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 600; }
+  .marca img { width: 32px; height: 32px; border-radius: 8px; }
+  .cabeza { text-align: center; display: grid; gap: 14px; justify-items: center; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 600; letter-spacing: .02em;
+    color: var(--verde); background: rgba(121, 255, 191, .1); border: 1px solid rgba(121, 255, 191, .3);
+    padding: 5px 12px; border-radius: 999px;
+  }
+  h1 {
+    font-family: LaObrige, 'Inter', serif; font-weight: 400;
+    font-size: clamp(32px, 7vw, 46px); line-height: 1.1; text-wrap: balance;
+    background: linear-gradient(90deg, #e59cff, #ba9cff 50%, #9cb2ff);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .lead { font-size: 18px; color: var(--suave); max-width: 32em; text-wrap: balance; }
+  .lead strong { color: var(--texto); }
+
+  .correo {
+    border: 1px solid rgba(186, 156, 255, .3);
+    background: linear-gradient(180deg, rgba(168, 127, 255, .08), rgba(168, 127, 255, .02));
+    border-radius: 16px; padding: 20px;
+    display: grid; gap: 14px;
+  }
+  .correo h2 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--lila); }
+  .mail {
+    display: grid; grid-template-columns: 44px 1fr; gap: 4px 14px; align-items: center;
+    background: rgba(3, 0, 20, .6); border: 1px solid var(--borde); border-radius: 12px; padding: 14px 16px;
+  }
+  .mail img { grid-row: span 2; width: 44px; height: 44px; border-radius: 50%; }
+  .mail .de { font-weight: 600; overflow-wrap: anywhere; }
+  .mail .de span { font-weight: 400; color: var(--tenue); font-size: 14px; }
+  .mail .asunto { color: var(--suave); font-size: 15px; }
+  .correo p { font-size: 14px; color: var(--tenue); }
+
+  .pasos { list-style: none; display: grid; gap: 12px; counter-reset: paso; }
+  .pasos li {
+    counter-increment: paso;
+    display: grid; grid-template-columns: 34px 1fr; gap: 14px; align-items: start;
+    padding: 16px; border: 1px solid var(--borde); border-radius: 14px; background: var(--tarjeta);
+  }
+  .pasos li::before {
+    content: counter(paso);
+    width: 34px; height: 34px; border-radius: 50%;
+    display: grid; place-items: center; font-weight: 700; font-size: 15px;
+    color: var(--fondo); background: var(--lila);
+  }
+  .pasos b { display: block; margin-bottom: 2px; }
+  .pasos span { color: var(--suave); font-size: 15px; }
+
+  section { display: grid; gap: 14px; }
+  section > h2 { font-size: 20px; font-weight: 600; text-wrap: balance; }
+  section > p { color: var(--suave); font-size: 15px; }
+  .video { position: relative; aspect-ratio: 16 / 9; max-width: 100%; border-radius: 14px; overflow: hidden; border: 1px solid var(--borde); background: #000; }
+  .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .enlaces { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+  .enlaces a {
+    display: grid; gap: 2px; text-decoration: none; color: var(--texto);
+    padding: 14px 16px; border: 1px solid var(--borde); border-radius: 14px; background: var(--tarjeta);
+    transition: border-color .15s, background .15s;
+  }
+  .enlaces a:hover { border-color: rgba(186, 156, 255, .45); background: rgba(186, 156, 255, .06); }
+  .enlaces a:focus-visible, .ayuda a:focus-visible { outline: 2px solid var(--lila); outline-offset: 2px; }
+  .enlaces b { font-weight: 600; }
+  .enlaces span { color: var(--tenue); font-size: 14px; }
+
+  .ayuda {
+    text-align: center; display: grid; gap: 6px; justify-items: center;
+    padding: 20px; border-radius: 16px; border: 1px dashed rgba(255, 255, 255, .16);
+  }
+  .ayuda b { font-size: 16px; }
+  .ayuda p { color: var(--suave); font-size: 15px; max-width: 30em; }
+  .ayuda a { color: var(--lila); }
+  footer { text-align: center; color: var(--tenue); font-size: 13px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .chip::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--verde); animation: latido 1.8s ease-in-out infinite; }
+    @keyframes latido { 50% { opacity: .35; } }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .chip::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--verde); }
+  }
+</style>
+</head>
+<body>
+<main>
+  <div class="marca"><img src="/files/logo1.png" alt="" width="32" height="32">NeuroFlix</div>
+
+  <header class="cabeza">
+    <span class="chip">Pago confirmado</span>
+    <h1>¡Gracias por unirte a NeuroFlix!</h1>
+    <p class="lead">Tus datos de acceso te llegan <strong>por email en unos minutos</strong>, al mismo correo que usaste para pagar. No necesitas enviarnos el comprobante.</p>
+  </header>
+
+  <div class="correo">
+    <h2>Busca este email</h2>
+    <div class="mail">
+      <img src="/files/logo1.png" alt="" width="44" height="44">
+      <div class="de">NeuroFlix <span>noreply@neuroflix.pro</span></div>
+      <div class="asunto">Tu acceso a NeuroFlix esta listo</div>
+    </div>
+    <p>Ahí están tu usuario, tu contraseña y los pasos para entrar.</p>
+  </div>
+
+  <ol class="pasos">
+    <li><div><b>Abre tu correo</b><span>Gmail, Outlook, Hotmail o el que usaste al pagar.</span></div></li>
+    <li><div><b>¿No lo ves en la bandeja de entrada?</b><span>Revisa las carpetas <strong>Spam</strong>, <strong>Promociones</strong> o <strong>Correo no deseado</strong>, y márcalo como "No es spam" para que los próximos avisos te lleguen bien.</span></div></li>
+    <li><div><b>Sigue los pasos del email</b><span>Con esos datos entras a la plataforma y a todas las herramientas.</span></div></li>
+  </ol>
+
+  <section>
+    <h2>Mientras tanto, mira este video</h2>
+    <p>En pocos minutos te explica cómo entrar a la plataforma y resuelve las dudas más comunes.</p>
+    <div class="video">
+      <iframe src="https://www.youtube.com/embed/gzebVcIu1ZU?rel=0&modestbranding=1" title="Tutorial de bienvenida a NeuroFlix" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <section>
+    <h2>Guías rápidas</h2>
+    <div class="enlaces">
+      <a href="/veo"><b>Cómo usar Veo 3</b><span>Generar videos paso a paso</span></a>
+      <a href="/chatgpt"><b>Cómo entrar a ChatGPT</b><span>Iniciar sesión en tu cuenta</span></a>
+      <a href="https://chat.whatsapp.com/G5WzPRaAxquLJCkjrvpVjd" target="_blank" rel="noopener"><b>Comunidad de WhatsApp</b><span>Novedades y avisos del equipo</span></a>
+    </div>
+  </section>
+
+  <div class="ayuda">
+    <b>¿Pasaron 10 minutos y no te llegó?</b>
+    <p>Escríbenos por el mismo chat donde hiciste tu compra, o a <a href="mailto:soporte@neuroflix.pro">soporte@neuroflix.pro</a>, con el email que usaste para pagar.</p>
+  </div>
+
+  <footer>© NeuroFlix</footer>
+</main>
+</body>
+</html>
