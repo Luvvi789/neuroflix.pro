@@ -46,6 +46,8 @@ code{background:#241f38;color:#c3aeff;padding:2px 7px;border-radius:6px;font-siz
 footer{text-align:center;color:#5d5873;font-size:12.5px;margin-top:26px}
 footer a{color:#7f7996}
 @media(max-width:560px){h1{font-size:23px}.step{padding:16px}.step>p,.step p.nota{margin-left:0}.step ol,.step ul{margin-left:20px}}
+.step img{width:100%;height:auto;display:block;border-radius:10px;border:1px solid #2b2740;margin-top:4px}
+.destacado{border-color:#4b3d8f;background:linear-gradient(180deg,#1d1830,#17141f)}
 </style>
 </head>
 <body>
@@ -53,21 +55,52 @@ footer a{color:#7f7996}
 <header>
 <div class="kicker">NeuroFlix &middot; Guía rápida</div>
 <h1>DICloak: qué hacer si algo falla</h1>
-<p class="lead">Si un perfil no abre, una página no carga o un video se queda cargando, sigue esta guía en orden. Casi siempre se arregla en 2 minutos sin ayuda.</p>
+<p class="lead">Antes de usar cualquier herramienta, borra la caché de DICloak (paso 0). Si igual algo falla —un perfil no abre, una página no carga o un video se queda cargando— sigue el resto de la guía.</p>
 </header>
+
+<div class="sec" id="borrar-cache">0 · Lo más importante: borra la caché de DICloak</div>
+
+<div class="ok">
+<b>Hazlo antes de entrar a cualquier herramienta</b>
+<p>Si ya tienes DICloak hace un tiempo, se va llenando de archivos guardados y las herramientas empiezan a fallar, cargar lento o quedarse en blanco. Borrar la caché lo deja limpio en 1 minuto.</p>
+</div>
+
+<div class="step destacado">
+<div class="head"><div class="num">1</div><h2>Haz clic en tu perfil, arriba a la derecha</h2></div>
+<p>En la pantalla principal de DICloak (<span class="ruta">Perfiles</span>), pulsa tu nombre y foto en la esquina superior derecha.</p>
+<img alt="Paso 1: en DICloak, hacer clic en el perfil arriba a la derecha" src="/dicloak/cache1.jpg" width="1200" height="837">
+</div>
+
+<div class="step destacado">
+<div class="head"><div class="num">2</div><h2>Elige “Personal”</h2></div>
+<p>Se abre un menú con 4 opciones. Haz clic en <code>Personal</code>.</p>
+<img alt="Paso 2: en el menú del perfil, hacer clic en Personal" src="/dicloak/cache2.jpg" width="1200" height="842">
+</div>
+
+<div class="step destacado">
+<div class="head"><div class="num">3</div><h2>Pulsa “Eliminar toda la caché del entorno”</h2></div>
+<p>En la sección <span class="ruta">Caché del entorno</span>, pulsa el botón <code>Eliminar toda la caché del entorno</code> y confirma si te lo pide.</p>
+<img alt="Paso 3: pulsar el botón Eliminar toda la caché del entorno" src="/dicloak/cache3.jpg" width="1200" height="855">
+</div>
+
+<div class="step destacado">
+<div class="head"><div class="num">4</div><h2>Reinicia DICloak y entra a la herramienta</h2></div>
+<p>Cierra DICloak del todo (en Windows, también el ícono junto al reloj: clic derecho &rarr; salir), vuelve a abrirlo y entra a la herramienta que necesites. Listo.</p>
+</div>
 
 <nav class="indice" aria-label="Contenido">
 <b>Ir directo a:</b>
 <ul>
-<li><a href="#basico">1. Lo primero: 3 cosas rápidas</a></li>
-<li><a href="#cache">2. Limpiar la caché de un perfil</a></li>
+<li><a href="#borrar-cache">0. Borrar la caché de DICloak (hazlo primero)</a></li>
+<li><a href="#basico">1. Si algo falla: 3 cosas rápidas</a></li>
+<li><a href="#cache">2. Limpiar la caché de un solo perfil</a></li>
 <li><a href="#errores">3. Errores comunes al abrir un perfil</a></li>
 <li><a href="#antivirus">4. Permitir DICloak en el antivirus</a></li>
 <li><a href="#requisitos">5. Requisitos de tu computadora</a></li>
 </ul>
 </nav>
 
-<div class="sec" id="basico">1 · Lo primero</div>
+<div class="sec" id="basico">1 · Si algo falla: lo primero</div>
 
 <div class="step">
 <div class="head"><div class="num">1</div><h2>Cierra DICloak del todo y vuelve a abrirlo</h2></div>
@@ -84,7 +117,7 @@ footer a{color:#7f7996}
 <p>Si DICloak te avisa que hay una actualización, instálala. Varios errores (por ejemplo <span class="err">No kernel selected</span>) aparecen solo por tener una versión vieja. Si no se actualiza solo, descarga la última versión desde <b>dicloak.com</b> e instálala encima.</p>
 </div>
 
-<div class="sec" id="cache">2 · Limpiar la caché de un perfil</div>
+<div class="sec" id="cache">2 · Limpiar la caché de un solo perfil</div>
 
 <div class="ok">
 <b>Cuándo sirve</b>
