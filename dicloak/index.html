@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>DICloak: qué hacer si algo falla - NeuroFlix</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,Helvetica,sans-serif;background:#0d0b14;color:#ece9f4;line-height:1.55;padding:28px 16px 56px}
+.wrap{max-width:820px;margin:0 auto}
+header{text-align:center;margin-bottom:26px}
+.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#9b7bff;font-weight:700;margin-bottom:10px}
+h1{font-size:28px;font-weight:700;letter-spacing:-.4px;line-height:1.2;text-wrap:balance}
+.lead{color:#a8a2bd;font-size:15.5px;margin-top:12px}
+.sec{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#9b7bff;font-weight:700;margin:34px 0 12px}
+.step{background:#17141f;border:1px solid #2b2740;border-radius:16px;padding:20px;margin-bottom:16px;scroll-margin-top:16px}
+.head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.num{flex:none;width:34px;height:34px;border-radius:50%;background:#9b7bff;color:#17141f;font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center}
+h2{font-size:18px;font-weight:650;letter-spacing:-.2px;text-wrap:balance}
+.step>p{color:#a8a2bd;font-size:15px;margin:2px 0 10px 46px}
+.step ol,.step ul{color:#a8a2bd;font-size:15px;margin:6px 0 4px 66px;display:grid;gap:7px}
+.step p.nota{font-size:13.5px;color:#7f7996;margin:10px 0 0 46px}
+code{background:#241f38;color:#c3aeff;padding:2px 7px;border-radius:6px;font-size:14px;font-weight:600}
+.err{display:inline-block;background:#2a1520;color:#ffb3c5;border:1px solid #5a2236;padding:2px 8px;border-radius:6px;font:600 13.5px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;word-break:break-word}
+.ruta{color:#ece9f4;font-weight:600}
+.aviso{background:#2a1520;border:1px solid #6b2540;border-radius:16px;padding:18px 20px;margin:0 0 16px}
+.aviso b{color:#ff9db4}
+.aviso p{color:#e8c9d3;font-size:15px;margin-top:6px}
+.ok{background:#12291f;border:1px solid #26593f;border-radius:16px;padding:18px 20px;margin-bottom:16px}
+.ok b{color:#6fd39a}
+.ok p{color:#c4e6d3;font-size:15px;margin-top:6px}
+.indice{background:#17141f;border:1px solid #2b2740;border-radius:16px;padding:16px 18px}
+.indice b{display:block;font-size:14px;margin-bottom:8px}
+.indice ul{list-style:none;display:grid;gap:6px}
+.indice a{color:#c3aeff;text-decoration:none;font-size:14.5px}
+.indice a:hover{text-decoration:underline}
+.indice a:focus-visible,.cta:focus-visible{outline:3px solid #ece9f4;outline-offset:3px;border-radius:4px}
+.errhead{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin-bottom:8px}
+.errhead h2{font-size:16.5px}
+.errcard>p,.errcard ol,.errcard ul{margin-left:0}
+.errcard ol,.errcard ul{margin-left:20px}
+.admin{font-size:13.5px;color:#7f7996;margin-top:10px}
+.cta{display:block;text-align:center;background:#9b7bff;color:#17141f;font-weight:700;font-size:16px;text-decoration:none;padding:15px;border-radius:12px;margin-top:26px}
+footer{text-align:center;color:#5d5873;font-size:12.5px;margin-top:26px}
+footer a{color:#7f7996}
+@media(max-width:560px){h1{font-size:23px}.step{padding:16px}.step>p,.step p.nota{margin-left:0}.step ol,.step ul{margin-left:20px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<div class="kicker">NeuroFlix &middot; Guía rápida</div>
+<h1>DICloak: qué hacer si algo falla</h1>
+<p class="lead">Si un perfil no abre, una página no carga o un video se queda cargando, sigue esta guía en orden. Casi siempre se arregla en 2 minutos sin ayuda.</p>
+</header>
+
+<nav class="indice" aria-label="Contenido">
+<b>Ir directo a:</b>
+<ul>
+<li><a href="#basico">1. Lo primero: 3 cosas rápidas</a></li>
+<li><a href="#cache">2. Limpiar la caché de un perfil</a></li>
+<li><a href="#errores">3. Errores comunes al abrir un perfil</a></li>
+<li><a href="#antivirus">4. Permitir DICloak en el antivirus</a></li>
+<li><a href="#requisitos">5. Requisitos de tu computadora</a></li>
+</ul>
+</nav>
+
+<div class="sec" id="basico">1 · Lo primero</div>
+
+<div class="step">
+<div class="head"><div class="num">1</div><h2>Cierra DICloak del todo y vuelve a abrirlo</h2></div>
+<p>No basta con cerrar la ventana: en Windows, cierra también el ícono de DICloak junto al reloj (clic derecho &rarr; salir). Luego ábrelo otra vez y abre el perfil.</p>
+</div>
+
+<div class="step">
+<div class="head"><div class="num">2</div><h2>Revisa tu internet</h2></div>
+<p>Abre cualquier página normal (por ejemplo google.com) fuera de DICloak. Si estás en una red de empresa, colegio o un Wi-Fi público, prueba con <b>los datos de tu celular</b> (compartir internet / punto de acceso): esas redes muchas veces bloquean DICloak.</p>
+</div>
+
+<div class="step">
+<div class="head"><div class="num">3</div><h2>Usa la última versión de DICloak</h2></div>
+<p>Si DICloak te avisa que hay una actualización, instálala. Varios errores (por ejemplo <span class="err">No kernel selected</span>) aparecen solo por tener una versión vieja. Si no se actualiza solo, descarga la última versión desde <b>dicloak.com</b> e instálala encima.</p>
+</div>
+
+<div class="sec" id="cache">2 · Limpiar la caché de un perfil</div>
+
+<div class="ok">
+<b>Cuándo sirve</b>
+<p>Cuando una página se ve rara, no carga, se queda en blanco, un video del Studio se queda cargando en bucle, o DICloak muestra errores de datos. Limpiar la caché borra lo guardado <b>en tu computadora</b> para ese perfil, y al abrirlo se vuelve a cargar todo limpio.</p>
+</div>
+
+<div class="step">
+<div class="head"><div class="num">1</div><h2>Cierra el perfil</h2></div>
+<p>Si el perfil está abierto, ciérralo primero (cierra su ventana del navegador).</p>
+</div>
+
+<div class="step">
+<div class="head"><div class="num">2</div><h2>Abre el menú del perfil</h2></div>
+<p>En DICloak, ve a <span class="ruta">Perfiles</span> (<code>Profiles</code>). En la fila del perfil que falla, pulsa el botón de tres puntos <code>…</code> y elige <code>Clear cache</code> (Limpiar caché).</p>
+</div>
+
+<div class="step">
+<div class="head"><div class="num">3</div><h2>Elige solo “local” y confirma</h2></div>
+<p>Marca únicamente <code>Clear Local Storage</code> (limpiar el almacenamiento <b>local</b>, solo de tu computadora) y confirma. Después abre el perfil de nuevo.</p>
+<p class="nota">Si tu DICloak está en español, los nombres pueden aparecer traducidos: elige siempre la opción que diga <b>local</b>.</p>
+</div>
+
+<div class="aviso">
+<b>Nunca elijas “Clear Cloud Storage” ni “Clear all cache”</b>
+<p>Esas opciones borran los datos guardados <b>en la nube</b> y cierran la sesión de la cuenta para todos los que la usan. Si solo ves esas opciones, o no te aparece <i>Clear cache</i>, no hagas nada y escríbenos por WhatsApp.</p>
+</div>
+
+<div class="ok">
+<b>Después de limpiar</b>
+<p>Lo normal es que la cuenta siga con la sesión iniciada, porque la sesión se recupera desde la nube al abrir el perfil. Si alguna herramienta te pide iniciar sesión, sigue su guía (por ejemplo la de <a href="/chatgpt" style="color:#6fd39a">ChatGPT</a>) o escríbenos.</p>
+</div>
+
+<div class="sec" id="errores">3 · Errores al abrir un perfil</div>
+<p style="color:#a8a2bd;font-size:15px;margin:-4px 0 14px">Busca el mensaje que te sale (o el más parecido) y sigue los pasos de ese recuadro. Para encontrarlo rápido usa <b>Ctrl + F</b> (en Mac, <b>Cmd + F</b>) y escribe una palabra del error.</p>
+
+<div class="step errcard" id="nada">
+<div class="errhead"><h2>Pulso “Abrir” y no pasa nada</h2></div>
+<ol>
+<li>Casi siempre es el <b>antivirus</b> bloqueando DICloak. Agrega la carpeta <code>.DICloakCache</code> a las excepciones del antivirus (<a href="#antivirus" style="color:#c3aeff">ver cómo</a>), o desactiva el antivirus un momento para probar.</li>
+<li>Revisa que tu disco no esté lleno: si está por encima del 90%, libera espacio (vacía la papelera, borra descargas viejas).</li>
+</ol>
+</div>
+
+
+
+<div class="step errcard" id="proxy">
+<div class="errhead"><span class="err">Proxy connection failed</span></div>
+<ol>
+<li>Si usas un <b>VPN</b>, apágalo y vuelve a abrir el perfil. Si necesitas el VPN: avatar &rarr; <code>Personal Settings</code> &rarr; <code>Basic Settings</code> y activa <code>Local Proxy</code>.</li>
+<li>Las redes de empresa o con <b>firewall</b> suelen bloquear la conexión. Prueba con los datos de tu celular.</li>
+<li>Si con otra red tampoco abre, el problema es de nuestro lado: escríbenos por WhatsApp y lo arreglamos.</li>
+</ol>
+</div>
+
+<div class="step errcard" id="red">
+<div class="errhead"><span class="err">Device network unavailable</span><span class="err">TIMEOUT_UNKNOWN</span><span class="err">Timeout of 20000ms exceeded</span></div>
+<ol>
+<li>Tu computadora no tiene buena conexión. Revisa que abran páginas normales y prueba con otro Wi-Fi o con los datos del celular.</li>
+<li>Si sale <b>Timeout</b>: revisa que tengas al menos 10 GB libres en el disco y vuelve a abrir el perfil.</li>
+</ol>
+</div>
+
+<div class="step errcard" id="lock">
+<div class="errhead"><span class="err">LOCK ENV FAIL</span><span class="err">Failed to lock profile</span></div>
+<p>Es una falla de conexión momentánea. Espera unos <b>5 minutos</b> y vuelve a intentar. Si sigue, cambia de red (por ejemplo, datos del celular).</p>
+</div>
+
+
+<div class="step errcard" id="kernel-missing">
+<div class="errhead"><span class="err">Kernel for this profile is missing</span></div>
+<ol>
+<li>Pulsa <code>Open</code> otra vez. Aparece <code>Please download the kernel first</code>: pulsa <code>Download</code>.</li>
+<li>El avance se ve arriba a la derecha (ícono de notificaciones). Cuando termine, abre el perfil.</li>
+<li>Si la descarga falla: deja <b>al menos 2 GB libres</b> en el disco y permite DICloak en el antivirus (<a href="#antivirus" style="color:#c3aeff">ver cómo</a>). Reinicia DICloak y descarga otra vez.</li>
+</ol>
+</div>
+
+
+
+<div class="step errcard" id="sin-kernel">
+<div class="errhead"><span class="err">No Kernel Selected</span><span class="err">The Browser Kernel for the Profile is Empty</span></div>
+<p>Tu DICloak está desactualizado. Instala la <b>última versión</b> desde dicloak.com y vuelve a abrir el perfil.</p>
+</div>
+
+<div class="step errcard" id="otro">
+<div class="errhead"><h2>¿Te sale otro error?</h2></div>
+<p>Primero prueba lo de la <a href="#basico" style="color:#c3aeff">sección 1</a> (reiniciar, otra red, actualizar) y limpia la caché local del perfil (<a href="#cache" style="color:#c3aeff">sección 2</a>). Si sigue igual, <b>no borres carpetas ni cambies ajustes</b>: mándanos por WhatsApp una captura del error y el nombre del perfil, y lo arreglamos desde nuestra cuenta.</p>
+</div>
+
+<div class="sec" id="antivirus">4 · Permitir DICloak en el antivirus</div>
+
+<div class="step">
+<div class="head"><div class="num">1</div><h2>Busca dónde está la carpeta .DICloakCache</h2></div>
+<p>En DICloak: avatar (arriba a la derecha) &rarr; <code>Personal Settings</code> &rarr; <code>Settings</code>. Ahí aparece la ruta de la carpeta de caché (por ejemplo <code>C:\Users\TuUsuario\.DICloakCache</code>). Si no la ves en el Explorador, activa <b>Vista &rarr; Mostrar &rarr; Elementos ocultos</b>.</p>
+</div>
+
+<div class="step">
+<div class="head"><div class="num">2</div><h2>Agrégala como excepción (Windows Defender)</h2></div>
+<p>Abre <span class="ruta">Seguridad de Windows</span> &rarr; <span class="ruta">Protección contra virus y amenazas</span> &rarr; <span class="ruta">Administrar la configuración</span> &rarr; <span class="ruta">Exclusiones</span> &rarr; <span class="ruta">Agregar una exclusión</span> &rarr; <span class="ruta">Carpeta</span>, y elige la carpeta <code>.DICloakCache</code>.</p>
+<p class="nota">Si usas otro antivirus (Norton, Avast, 360, etc.), busca en su configuración “Excepciones”, “Lista blanca” o “Aplicaciones permitidas” y agrega la misma carpeta.</p>
+</div>
+
+<div class="sec" id="requisitos">5 · Requisitos de tu computadora</div>
+
+<div class="step">
+<ul>
+<li><b>Windows 10 o superior</b>, o <b>macOS 11 (Big Sur) o superior</b>. Descarga el instalador correcto: Windows de 64 bits, o Mac con chip Intel o Apple (M1/M2/M3).</li>
+<li>Solo funciona en la <b>aplicación de DICloak para computadora</b>. No funciona en el celular ni en la versión web.</li>
+<li>Deja <b>10 GB libres</b> en el disco: con poco espacio aparecen casi todos los errores de esta guía.</li>
+</ul>
+</div>
+
+<a class="cta" href="https://wa.me/5511932230557">Sigue sin funcionar: escribir por WhatsApp</a>
+<p style="text-align:center;color:#7f7996;font-size:13.5px;margin-top:10px">Mándanos una captura del error y el nombre del perfil que intentabas abrir.</p>
+<footer>NeuroFlix &middot; neuroflix.pro &middot; Basado en el <a href="https://help.dicloak.com/" rel="noopener">centro de ayuda de DICloak</a></footer>
+</div>
+</body>
+</html>
